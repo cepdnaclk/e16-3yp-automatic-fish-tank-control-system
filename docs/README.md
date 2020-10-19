@@ -5,7 +5,7 @@
 
 [**Click here to check our Marketing website!!**](https://cepdnaclk.github.io/e16-3yp-automatic-fish-tank-control-system/marketing_site.html)
 
-[**To access our project repo **](https://github.com/cepdnaclk/e16-3yp-automatic-fish-tank-control-system)
+[**To access our project repo**](https://github.com/cepdnaclk/e16-3yp-automatic-fish-tank-control-system)
 
 ## Group members
 
