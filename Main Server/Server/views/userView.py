@@ -1,13 +1,12 @@
 from Server import app
-from Server.db.database import retrieve_user,add_user,update_user_name
-from Server.db.schemas import SignUpSchema,ProfileSchema,UserSchema
+from Server.db.controllers.handlers import retrieve_user,add_user,update_user_name
+from Server.db.schemas.userschema import SignUpSchema,ProfileSchema,UserSchema
 from datetime import datetime, timedelta
 from fastapi import Depends, FastAPI, HTTPException, status,Body,Response
-# from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from typing import Optional
-from Server.views.config import ACCESS_TOKEN_EXPIRE_MINUTES,ALGORITHM,SECRET_KEY
+from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES,ALGORITHM,SECRET_KEY
 
 
 
@@ -32,11 +31,12 @@ def get_password_hash(password):
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
+    # should fixed here
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
-    # to_encode.update({"exp": expire})
+    to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -78,7 +78,7 @@ async def login(response: Response,form_data: UserSchema = Body(...)):
 
 
 @app.post("/signup")
-async def signup(response: Response,sigbupuser: SignUpSchema = Body(...)):
+async def signup(response: Response,signupuser: SignUpSchema = Body(...)):
     profile=dict()
     user=dict()
     
@@ -86,18 +86,18 @@ async def signup(response: Response,sigbupuser: SignUpSchema = Body(...)):
     if extince:
         return {}
     
-    profile["fname"]=sigbupuser.fname
-    profile["lname"]=sigbupuser.lname
-    profile["email"]=sigbupuser.email
+    profile["fname"]=signupuser.fname
+    profile["lname"]=signupuser.lname
+    profile["email"]=signupuser.email
     
-    user["email"]=sigbupuser.email
-    user["password"]=sigbupuser.password
+    user["email"]=signupuser.email
+    user["password"]=get_password_hash(signupuser.password)
     user["devices"]=[]
     
     new_profile  = await add_user(user,profile)
     
     if new_profile:
-            access_token=setToken(sigbupuser.email)
+            access_token=setToken(signupuser.email)
             response.headers["Authorization"]="Bearer "+access_token
             return {"status":True}
     return {"status":False}

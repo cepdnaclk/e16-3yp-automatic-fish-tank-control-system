@@ -19,8 +19,3 @@ class UserSchema(BaseModel):
     email: EmailStr = Field(...)
     password: str=Field(...)
     devices:List[str] = []
-    
-    
-
-
-    

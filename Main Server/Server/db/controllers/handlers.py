@@ -1,20 +1,5 @@
-import motor.motor_asyncio
-from bson.objectid import ObjectId
-
-
-MONGO_DETAILS = "mongodb://localhost:27017"
-
-client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
-
-# referenced a database  tankusers
-database = client.tankusers
-
-profiles_collection = database.get_collection("profiles_collection")
-
-users_collection = database.get_collection("users_collection")
-
-
-# helper functions
+from Server.db.controllers.connection import users_collection
+from Server.db.controllers.connection import profiles_collection
 
 def profile_helper(profile) -> dict:
     return {
@@ -79,8 +64,3 @@ async def update_user_name(email: str, fname:str,lname:str):
         if updated_user:
             return True
     return False
-    
-    
-    
-
-    
