@@ -1,20 +1,23 @@
-from Server import app
-from Server.db.controllers.handlers import retrieve_user,add_user,update_user_name
-from Server.db.schemas.userschema import SignUpSchema,ProfileSchema,UserSchema
 from datetime import datetime, timedelta
 from fastapi import Depends, FastAPI, HTTPException, status,Body,Response
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from typing import Optional
-from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES,ALGORITHM,SECRET_KEY
 
+
+
+from Server import app
+from Server.db.controllers.handlers import retrieve_user,add_user,update_user_name
+from Server.db.schemas.userschema import SignUpSchema,ProfileSchema,UserSchema,ConfirmCode
+from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES,ALGORITHM,SECRET_KEY
+from Server.email.handlers import sendEmail
 
 
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 def verify_password(plain_password, hashed_password):
     try:
@@ -118,4 +121,8 @@ async def changePassword(response: Response,form_data: UserSchema = Body(...)):
     return {"status":False}    
     
     
+@app.post("/confirmation")
+async def confirm(response:Response,body:ConfirmCode=Body(...)):
+    sendEmail(body.email,body.code)
+    return {"status":True}
     

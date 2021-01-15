@@ -4,3 +4,5 @@ motor
 python-jose[cryptography]
 passlib[bcrypt]
 pydantic[email]
+influxdb
+paho-mqtt

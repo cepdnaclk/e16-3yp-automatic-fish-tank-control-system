@@ -12,3 +12,5 @@ database = client.tankusers
 profiles_collection = database.get_collection("profiles_collection")
 
 users_collection = database.get_collection("users_collection")
+
+tank_collection = database.get_collection("tank_collection")
