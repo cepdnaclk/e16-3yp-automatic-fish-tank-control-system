@@ -12,6 +12,11 @@ motor = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 pydantic = {extras = ["email"], version = "*"}
+influxdb = "*"
+paho-mqtt = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+Server = "python run.py"

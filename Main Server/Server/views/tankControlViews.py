@@ -1,17 +1,35 @@
-from Server import app
-from fastapi import Header
+from fastapi import Header,Body
 from typing import Optional
 
+from Server import app
 from Server.controllers.tokenControllers import token_check
+from Server.mqtt.publishHandler import publishMessage
+from Server.db.schemas.userschema import Device
 
-@app.get("/control/feed")
-async def feed(Authorization:Optional[str] = Header(None)):
+
+@app.post("/control/feed")
+async def feed(Authorization:Optional[str] = Header(None),body:Device=Body(...)):
     user=await token_check(Authorization)
-    return user
+    if not user:
+        return {"status": False}
+    try:
+        topic="tank/"+body.device_id
+        publishMessage(topic,"feed",2)
+        return {"status": True}
+    except :
+        return {"status": False}
     
     
-@app.get("/control/renew")
-async def renewWater(Authorization:Optional[str] = Header(None)):
+    
+@app.post("/control/renew")
+async def renewWater(Authorization:Optional[str] = Header(None),body:Device=Body(...)):
     user=await token_check(Authorization)
-    return user
+    if not user:
+        return {"status": False}
+    try:
+        topic="tank/"+body.device_id
+        publishMessage(topic,"renw",2)
+        return {"status": True}
+    except :
+        return {"status": False}
     
