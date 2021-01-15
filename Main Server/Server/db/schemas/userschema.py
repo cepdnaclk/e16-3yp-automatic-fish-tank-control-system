@@ -28,5 +28,11 @@ class Device(BaseModel):
     device_id:str
     
 class DeviceNotification(BaseModel):
-    device_id:str
+    id:str
     msg:str
+    
+    
+class DeviceData(BaseModel):
+    id:str
+    ph:str
+    tmp:str

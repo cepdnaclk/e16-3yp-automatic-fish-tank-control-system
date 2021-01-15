@@ -14,6 +14,7 @@ passlib = {extras = ["bcrypt"], version = "*"}
 pydantic = {extras = ["email"], version = "*"}
 influxdb = "*"
 paho-mqtt = "*"
+install = "*"
 
 [requires]
 python_version = "3.7"
