@@ -7,12 +7,12 @@ from Server.db.controllers.handlers import retrieve_user
 
 
 async def get_current_active_user(email:str,exp:int):
-    
+    # fix
     user= await retrieve_user(email)
     return user
     
 
-
+ 
 async def token_check(header:str):
     try:
         token=header.split(" ")[1].strip()
@@ -21,13 +21,15 @@ async def token_check(header:str):
         exp=payload.get("exp")
         if email is None:
             raise Exception("Error in token")
-        user = await get_current_active_user(email,exp)
-        return user
+        # user = await get_current_active_user(email,exp)
+        # return user
+        # returning user change to bool 
+        return True
     except JWTError:
         print(JWTError)
-        return {}
+        return False
         
     except:
         print("Error in token controller")
-        return {}
+        return False
     

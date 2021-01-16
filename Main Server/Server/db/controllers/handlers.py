@@ -59,8 +59,11 @@ async def update_user_name(email: str, fname:str,lname:str):
         user["fname"]=fname
         user["lname"]=lname
         updated_user = await profiles_collection.update_one(
-            {"email": ObjectId(email)}, {"$set": user}
+            {"email":email}, {"$set": user}
         )
         if updated_user:
             return True
     return False
+
+
+
