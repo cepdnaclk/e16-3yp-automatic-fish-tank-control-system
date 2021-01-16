@@ -27,6 +27,8 @@ async def storeData(id:str,ph:str,temp:str):
 
 # id="505"
 #day="1d"
+
+
 async def retriveData(id:str,day:str):
     try:
         id='"'+id+'"'
@@ -36,4 +38,6 @@ async def retriveData(id:str,day:str):
         return data['series'][0]['values']
     except:
         return []
+    
+    
 

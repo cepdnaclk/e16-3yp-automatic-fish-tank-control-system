@@ -1,7 +1,7 @@
 from fastapi import Body,Response
 
 from Server import app
-from Server.db.schemas.userschema import DeviceNotification,DeviceData
+from Server.db.schemas.userschema import DeviceNotification,DeviceData,Device
 from Server.controllers.notificationController import notificationSend
 from Server.db.controllers.influxHandlers import storeData
 
@@ -21,6 +21,11 @@ async def getData(body:DeviceData=Body(...)):
 
 
 @app.post("/tankapi/temp")
-async def getTemperature():
+async def getTemperature(body:Device=Body(...)):
     # implement to send initial temp to controller
+    return{}
+
+@app.post("/tankapi/feedtime")
+async def getFeedTime(body:Device=Body(...)):
+    # implement to get initial feed time
     return{}

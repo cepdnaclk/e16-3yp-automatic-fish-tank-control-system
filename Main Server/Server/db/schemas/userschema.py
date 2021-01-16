@@ -36,3 +36,21 @@ class DeviceData(BaseModel):
     id:str
     ph:str
     tmp:str
+    
+    
+class AddTank(BaseModel):
+    email:EmailStr = Field(...)
+    device_id:str
+    fish_names:List[str]
+    fish_count:List[int]
+    height:int
+    lenght:int
+    width:int
+    
+class RetriveData(BaseModel):
+    device_id:str
+    day:str
+    
+    
+class AppData(BaseModel):
+    email:EmailStr = Field(...)
