@@ -1,3 +1,5 @@
+[![GitHub issues](https://img.shields.io/github/issues/cepdnaclk/e16-3yp-automatic-fish-tank-control-system?style=for-the-badge)](https://github.com/cepdnaclk/e16-3yp-automatic-fish-tank-control-system/issues)
+
 # Automatic Fish Tank Control System
 
 **Hello everyone!! Welcome to our project.**  
