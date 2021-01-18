@@ -1,5 +1,11 @@
 [![GitHub issues](https://img.shields.io/github/issues/cepdnaclk/e16-3yp-automatic-fish-tank-control-system?style=for-the-badge)](https://github.com/cepdnaclk/e16-3yp-automatic-fish-tank-control-system/issues)
 
+[![GitHub forks](https://img.shields.io/github/forks/cepdnaclk/e16-3yp-automatic-fish-tank-control-system)](https://github.com/cepdnaclk/e16-3yp-automatic-fish-tank-control-system/network)
+
+[![GitHub license](https://img.shields.io/github/license/cepdnaclk/e16-3yp-automatic-fish-tank-control-system)](https://github.com/cepdnaclk/e16-3yp-automatic-fish-tank-control-system/blob/main/LICENSE)
+
+
+
 # Automatic Fish Tank Control System
 
 **Hello everyone!! Welcome to our project.**  
