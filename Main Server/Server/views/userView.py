@@ -19,7 +19,7 @@ def verify_password(plain_password, hashed_password):
     try:
         return pwd_context.verify(plain_password, hashed_password)
     except:
-        return True
+        return False
 
 
 def get_password_hash(password):
@@ -88,9 +88,13 @@ async def signup(response: Response, signupuser: SignUpSchema = Body(...)):
     profile = dict()
     user = dict()
 
-    extince = await retrieve_user(sigbupuser.email)
+    extince = await retrieve_user(signupuser.email)
     if extince:
-        return {}
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="User exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
     profile["fname"] = signupuser.fname
     profile["lname"] = signupuser.lname
