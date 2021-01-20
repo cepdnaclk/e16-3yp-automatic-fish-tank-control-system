@@ -54,3 +54,6 @@ class RetriveData(BaseModel):
     
 class AppData(BaseModel):
     email:EmailStr = Field(...)
+    
+
+    

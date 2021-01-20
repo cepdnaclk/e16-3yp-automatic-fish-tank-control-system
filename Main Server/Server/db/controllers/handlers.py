@@ -5,7 +5,7 @@ def profile_helper(profile) -> dict:
     return {
         "fname": profile["fname"],
         "lname": profile["lname"],
-        "email": student["email"]
+        "email": profile["email"]
     }
     
 def user_helper(user) -> dict:
@@ -67,3 +67,6 @@ async def update_user_name(email: str, fname:str,lname:str):
 
 
 
+async def getUser(email:str):
+    user=await profiles_collection.find_one({"email": email})
+    return profile_helper(user)
