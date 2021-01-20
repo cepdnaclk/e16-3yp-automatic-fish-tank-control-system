@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
 fastapi = "*"
@@ -15,6 +16,9 @@ pydantic = {extras = ["email"], version = "*"}
 influxdb = "*"
 paho-mqtt = "*"
 install = "*"
+aiofiles = "*"
+jinja2 = "*"
+python-multipart = "*"
 
 [requires]
 python_version = "3.7"
