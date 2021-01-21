@@ -7,7 +7,7 @@ from typing import Optional
 
 from Server import app
 from Server.db.controllers.handlers import retrieve_user, add_user, update_user_name, getUser, update_user_password
-from Server.db.schemas.userschema import SignUpSchema, ProfileSchema, UserSchema, ConfirmCode, AppData, ChangePassword
+from Server.db.schemas.userschema import SignUpSchema, ProfileSchema, UserSchema, ConfirmCode, AppData, ChangePassword,Login
 from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from Server.email.handlers import sendEmail
 
@@ -59,7 +59,7 @@ def read_root():
 
 
 @app.post("/login")
-async def login(response: Response, form_data: UserSchema = Body(...)):
+async def login(response: Response, form_data: Login = Body(...)):
 
     user = await retrieve_user(form_data.email)
     if not user:
@@ -141,7 +141,7 @@ async def changePassword(response: Response, body: ChangePassword = Body(...)):
             headers={"WWW-Authenticate": "Bearer"},
         )
     if verify_password(body.old_password, user["password"]):
-        done = await update_user_password(body.email, user, body.new_password)
+        done = await update_user_password(body.email, user, get_password_hash(body.new_password))
         access_token = setToken(body.email)
         response.headers["Authorization"] = "Bearer "+access_token
         if done:

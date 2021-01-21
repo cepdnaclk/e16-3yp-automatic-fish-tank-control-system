@@ -13,9 +13,8 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
-client = mqtt.Client("Python",False)
+client = mqtt.Client("101",False)
 client.on_connect = on_connect
 client.on_message = on_message
-# client.username_pw_set("username", "password")
-client.connect("3.82.252.174", 1883, 60)
+client.connect("3.89.109.97", 1883)
 client.loop_forever()

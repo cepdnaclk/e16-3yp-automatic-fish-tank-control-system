@@ -1,9 +1,9 @@
 from Server.db.controllers.influxdbConnection import client
 from Server.db.controllers.connection import tank_collection
 
-async def storeData(id:str,ph:str,temp:str):
+async def storeData(id:str,ph:str,tmp:str):
     
-    tank= await tank_collection.find_one({"id": id})
+    tank= await tank_collection.find_one({"device_id": id})
     if tank:
         try:
             json_body = [
