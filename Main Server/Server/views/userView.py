@@ -6,8 +6,8 @@ from typing import Optional
 
 
 from Server import app
-from Server.db.controllers.handlers import retrieve_user, add_user, update_user_name, getUser
-from Server.db.schemas.userschema import SignUpSchema, ProfileSchema, UserSchema, ConfirmCode, AppData
+from Server.db.controllers.handlers import retrieve_user, add_user, update_user_name, getUser, update_user_password
+from Server.db.schemas.userschema import SignUpSchema, ProfileSchema, UserSchema, ConfirmCode, AppData, ChangePassword
 from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from Server.email.handlers import sendEmail
 
@@ -47,7 +47,7 @@ def setToken(email: str):
 
 @app.get("/")
 def read_root():
-    return {"msg":"hello"}
+    return {"msg": "hello"}
 
 
 # @app.post("/forgetpassword")
@@ -113,8 +113,8 @@ async def signup(response: Response, signupuser: SignUpSchema = Body(...)):
     return {"status": False}
 
 
-@app.post("/changepassword")
-async def changePassword(response: Response, form_data: UserSchema = Body(...)):
+@app.post("/changenames")
+async def changeNames(response: Response, form_data: SignUpSchema = Body(...)):
 
     user = await retrieve_user(form_data.email)
     if user:
@@ -124,7 +124,33 @@ async def changePassword(response: Response, form_data: UserSchema = Body(...)):
                 access_token = setToken(form_data.email)
                 response.headers["Authorization"] = "Bearer "+access_token
                 return {"status": True}
-    return {"status": False}
+    raise HTTPException(
+        status_code=status.HTTP_406_NOT_ACCEPTABLE,
+        detail="User not exist",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
+@app.post("/changepassword")
+async def changePassword(response: Response, body: ChangePassword = Body(...)):
+    user = await retrieve_user(body.email)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="change password faild",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    if verify_password(body.old_password, user["password"]):
+        done = await update_user_password(body.email, user, body.new_password)
+        access_token = setToken(body.email)
+        response.headers["Authorization"] = "Bearer "+access_token
+        if done:
+            return {"status": True}
+    raise HTTPException(
+        status_code=status.HTTP_406_NOT_ACCEPTABLE,
+        detail="change password faild",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
 
 @app.post("/confirmation")

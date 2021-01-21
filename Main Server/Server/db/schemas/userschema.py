@@ -48,6 +48,7 @@ class AddTank(BaseModel):
     width:int
     
 class RetriveData(BaseModel):
+    email:EmailStr = Field(...)
     device_id:str
     day:str
     
@@ -55,5 +56,10 @@ class RetriveData(BaseModel):
 class AppData(BaseModel):
     email:EmailStr = Field(...)
     
+    
+class ChangePassword(BaseModel):
+    old_password:str
+    new_password:str
+    email:str
 
     
