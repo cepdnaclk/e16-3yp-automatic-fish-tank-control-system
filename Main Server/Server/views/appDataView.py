@@ -8,6 +8,7 @@ from Server.db.controllers.tankHandlers import addNewTank
 from Server.db.controllers.influxHandlers import retriveData
 from Server.db.controllers.appHandlers import getAppData
 from Server.views.userView import setToken
+from Server.controllers.tokenControllers import token_check
 
 
 @app.post("/app/addtank")
@@ -26,13 +27,14 @@ async def addTank(response: Response, Authorization: Optional[str] = Header(None
     tank["height"] = body.height
     tank["lenght"] = body.lenght
     tank["width"] = body.width
+    
     if (await addNewTank(tank, body.email)):
         access_token = setToken(body.email)
         response.headers["Authorization"] = "Bearer "+access_token
         return{"status": True}
     raise HTTPException(
-        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        detail="Incorrect username or password",
+        status_code=status.HTTP_406_NOT_ACCEPTABLE,
+        detail="Incorrect Tank Id",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
@@ -49,7 +51,7 @@ async def retriveTankData(response: Response, Authorization: Optional[str] = Hea
     access_token = setToken(body.email)
     response.headers["Authorization"] = "Bearer "+access_token
     data = await retriveData(body.device_id, body.day)
-    return {"status": True, "data": data}
+    return {"data": data}
 
 
 @app.post("/app/getdevicedata")
@@ -61,7 +63,14 @@ async def retriveDevicesData(response: Response, Authorization: Optional[str] = 
             detail="Authorization Error",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    data = await getAppData(body.email)
+    try:
+        data = await getAppData(body.email)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="Wrong email",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     access_token = setToken(body.email)
     response.headers["Authorization"] = "Bearer "+access_token
-    return {"status": True, "data": data}
+    return { "data": data}
