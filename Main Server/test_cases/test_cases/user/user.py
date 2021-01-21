@@ -58,3 +58,44 @@ def changepassword(old_password: str, new_password: str, email: str):
         print("Status code "+str(r.status_code))
         print("Change Password faild")
         
+
+
+
+
+def changeNames(fname: str, lname: str, email: str, password: str):
+    data = {
+        "fname": fname,
+        "lname": lname,
+        "email": email,
+        "password": password
+    }
+
+    changenames_url = Url+"changenames"
+    r = requests.post(changenames_url, data=data)
+
+    if r.status_code == 200:
+        token = r.headers['Authorization']
+        print("Change name sucess")
+        print(r.json)
+    else:
+        print("Status code "+str(r.status_code))
+        print("Change name faild")
+
+
+def confirmationPassword(email:str,code:str):
+    data = {
+        "email": email,
+        "code": code
+    }
+    
+    confirmationpassword_url = Url+"confirmation"
+    r = requests.post(confirmationpassword_url, data=data)
+
+    if r.status_code == 200:
+        print("Confirmation code get sucess ")
+        print(r.json)
+    else:
+        print("Status code "+str(r.status_code))
+        print("Confirmation code get faild")
+        
+        
