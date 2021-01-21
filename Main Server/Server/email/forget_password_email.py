@@ -6,6 +6,8 @@ from Server.db.controllers.handlers import retrieve_user
 
 async def forgetPasswordEmailSend(email):
     user=await retrieve_user(email)
+    if not user:
+        return
     password=user['password']
     sent_from = GMAIL_USER
     sent_to = [email,]
