@@ -10,6 +10,7 @@ from Server.db.controllers.handlers import retrieve_user, add_user, update_user_
 from Server.db.schemas.userschema import SignUpSchema, ProfileSchema, UserSchema, ConfirmCode, AppData, ChangePassword,Login
 from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from Server.email.handlers import sendEmail
+from Server.email.forget_password_email import forgetPasswordEmailSend
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -52,10 +53,18 @@ def read_root():
 
 @app.post("/forgetpassword")
 def forgetPassword(response: Response, body: AppData = Body(...)):
-    if len(body.email) != 0:
-        return
-    else:
-        return
+    try:
+        await forgetPasswordEmailSend(body.email)
+        return {"status":True}
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_417_EXPECTATION_FAILED,
+            detail="Somethimg failed",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
+        
+   
 
 
 @app.post("/login")
