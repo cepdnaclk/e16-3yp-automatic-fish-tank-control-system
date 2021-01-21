@@ -52,7 +52,7 @@ def read_root():
 
 
 @app.post("/forgetpassword")
-def forgetPassword(response: Response, body: AppData = Body(...)):
+async def forgetPassword(response: Response, body: AppData = Body(...)):
     try:
         await forgetPasswordEmailSend(body.email)
         return {"status":True}
