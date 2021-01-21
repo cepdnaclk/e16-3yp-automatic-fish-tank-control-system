@@ -50,12 +50,12 @@ def read_root():
     return {"msg": "hello"}
 
 
-# @app.post("/forgetpassword")
-# def forgetPassword(response: Response, body: AppData = Body(...)):
-#     if len(body.email) != 0:
-#         return
-#     else:
-#         return
+@app.post("/forgetpassword")
+def forgetPassword(response: Response, body: AppData = Body(...)):
+    if len(body.email) != 0:
+        return
+    else:
+        return
 
 
 @app.post("/login")
