@@ -1,0 +1,22 @@
+<svg id="app-store" xmlns="http://www.w3.org/2000/svg" width="56.205" height="56.205" viewBox="0 0 56.205 56.205">
+  <g id="Group_2" data-name="Group 2" transform="translate(0 0)">
+    <g id="Group_1" data-name="Group 1">
+      <path id="Path_643" data-name="Path 643" d="M44.679,0H11.526A11.539,11.539,0,0,0,0,11.526V44.679A11.539,11.539,0,0,0,11.526,56.2H44.679A11.539,11.539,0,0,0,56.2,44.679V11.526A11.539,11.539,0,0,0,44.679,0Zm8.233,44.679a8.242,8.242,0,0,1-8.233,8.233H11.526a8.242,8.242,0,0,1-8.233-8.233V11.526a8.242,8.242,0,0,1,8.233-8.233H44.679a8.242,8.242,0,0,1,8.233,8.233Z" transform="translate(0 0)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_4" data-name="Group 4" transform="translate(9.386 11.527)">
+    <g id="Group_3" data-name="Group 3">
+      <path id="Path_644" data-name="Path 644" d="M109.667,107.04a2.744,2.744,0,0,0-5.027-.662l-.422.732-.422-.732a2.748,2.748,0,0,0-3.749-1h0a2.748,2.748,0,0,0-1,3.749l2.007,3.476-7.4,12.826h-5.4a2.744,2.744,0,0,0,0,5.489h20.842l-3.169-5.489H99.981l9.412-16.3A2.726,2.726,0,0,0,109.667,107.04Z" transform="translate(-85.5 -105.006)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_6" data-name="Group 6" transform="translate(29.37 21.315)">
+    <g id="Group_5" data-name="Group 5">
+      <path id="Path_645" data-name="Path 645" d="M282.253,204.8h-5.4l-6.137-10.63-3.169,5.489,9.529,16.5a2.726,2.726,0,0,0,1.667,1.279,2.759,2.759,0,0,0,.715.095,2.746,2.746,0,0,0,2.372-4.118l-1.807-3.13h2.23a2.744,2.744,0,0,0,0-5.489Z" transform="translate(-267.548 -194.166)" fill="#fff"/>
+    </g>
+  </g>
+  <g id="Group_8" data-name="Group 8" transform="translate(12.185 39.629)">
+    <g id="Group_7" data-name="Group 7">
+      <path id="Path_646" data-name="Path 646" d="M111.91,361l-.54.935a2.744,2.744,0,0,0,4.753,2.744L118.248,361Z" transform="translate(-111.003 -361)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
