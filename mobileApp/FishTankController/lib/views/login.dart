@@ -4,7 +4,9 @@ import 'package:sidebar/blocs/loginbloc/loginbloc.dart';
 
 import '../blocs/loginbloc/loginstates.dart';
 import '../Repositories/loginrepo.dart';
+
 import '../sidebar/sidebarLayout.dart';
+
 import '../views/login_view.dart';
 import '../views/spine_view.dart';
 
@@ -14,6 +16,7 @@ class LogIn extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(LoginInitialState(), LoginRepo()),
       child: BlocBuilder<LoginBloc, LoginStates>(
+
         builder: (context, state) {
           if (state is LoginInitialState) {
             return LoginView(
@@ -29,9 +32,9 @@ class LogIn extends StatelessWidget {
             );
           } else if (state is LoggedState) {
             return SideBarLayout(
-              email: "randikavirajmax@gmail.com",
-              fname: "Randika",
-              lname: "Viraj",
+              email: "hyoshith@gmail.com",
+              fname: "Yoshith",
+              lname: "Harshana",
             );
           } else if (state is LoginFailedState) {
             return LoginView(
@@ -39,6 +42,7 @@ class LogIn extends StatelessWidget {
               topic: "Login Failed",
               message: "Your Password or username is wrong...",
             );
+
           }
         },
       ),

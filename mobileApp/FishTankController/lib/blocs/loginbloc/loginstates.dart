@@ -11,6 +11,7 @@ class LoginFailedState extends LoginStates {}
 class ConnectionErrorState extends LoginStates {}
 
 class LoggedState extends LoginStates {
+
   final LoginResponseModel loginResponseModel;
 
   LoggedState(this.loginResponseModel);
@@ -20,5 +21,6 @@ class LoggedState extends LoginStates {
   String get fname=>this.loginResponseModel.fname;
 
   String get lname=>this.loginResponseModel.lname;
+
 
 }
