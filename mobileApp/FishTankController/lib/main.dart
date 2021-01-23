@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sidebar/sidebar/sidebarLayout.dart';
+
+
+import 'views/starting_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,8 +20,9 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.black,
           scaffoldBackgroundColor: Colors.white),
       home: Scaffold(
-        body: SideBarLayout(),
+        body: StartingView(),
       ),
     );
   }
 }
+// SideBarLayout()
