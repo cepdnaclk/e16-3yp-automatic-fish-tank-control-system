@@ -5,6 +5,7 @@ class LoginRequestModel {
 }
 
 class LoginResponseModel {
+
   String fname;
   String lname;
   String email;
@@ -16,4 +17,5 @@ class LoginResponseModel {
   }
 
   
+
 }
