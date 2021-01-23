@@ -21,6 +21,7 @@ class StartingViewButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: RaisedButton(
+          elevation: 10.0,
           padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
           color: this.background,
           onPressed: this.onPressed,

@@ -119,6 +119,7 @@ class SignUp extends StatelessWidget {
               height: 30,
             ),
             RaisedButton(
+              elevation: 10.0,
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.3, vertical: 10),
               color: Colors.black,

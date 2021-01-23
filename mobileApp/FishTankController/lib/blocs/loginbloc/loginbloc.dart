@@ -27,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
           prefs.setString('token', token);
         }
       } catch (e) {
-        yield CallLoginstate();
+        yield ConnectionErrorState();
       }
     }
   }
