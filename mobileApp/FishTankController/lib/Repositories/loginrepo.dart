@@ -8,11 +8,9 @@ class LoginRepo {
   Future<String> login(LoginRequestModel obj) async {
     final result = await http.post(LOGINURL, body: jsonEncode(obj));
     if (result.statusCode != 200) {
-      throw Exception('Failed to login');
+      return '';
     }
-
     final loginresponse = LoginResponseModel.fromJson(jsonDecode(result.body));
-
     if (loginresponse.status = true) {
       return result.headers['Authorization'];
     } else {

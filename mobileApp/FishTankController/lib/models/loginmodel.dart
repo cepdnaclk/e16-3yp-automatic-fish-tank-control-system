@@ -1,6 +1,7 @@
 class LoginRequestModel {
   String email;
   String passord;
+  LoginRequestModel({this.email,this.passord});
 }
 
 class LoginResponseModel {
