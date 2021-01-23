@@ -32,9 +32,15 @@ class LogIn extends StatelessWidget {
             );
           } else if (state is LoggedState) {
             return SideBarLayout(
+<<<<<<< HEAD
+              email: state.email,
+              fname: state.fname,
+              lname: state.lname,
+=======
               email: "hyoshith@gmail.com",
               fname: "Yoshith",
               lname: "Harshana",
+>>>>>>> 1f0d0e76fc20d21a47b77f5f658c7ee858ca652a
             );
           } else if (state is LoginFailedState) {
             return LoginView(
