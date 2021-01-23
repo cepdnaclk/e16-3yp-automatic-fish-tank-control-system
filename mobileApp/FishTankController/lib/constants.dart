@@ -1,1 +1,3 @@
-const String LOGINURL="";
+
+const String LOGINURL="http//login.com";
+

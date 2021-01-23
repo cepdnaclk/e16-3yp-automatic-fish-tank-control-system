@@ -22,7 +22,9 @@ class LoginBloc extends Bloc<LoginEvents, LoginStates> {
         if (token.isEmpty) {
           yield LoginFailedState();
         } else {
-          yield LoggedState(event.data);
+
+          yield LoggedState(this.loginRepo.loginResponse);
+
           final prefs = await SharedPreferences.getInstance();
           prefs.setString('token', token);
         }

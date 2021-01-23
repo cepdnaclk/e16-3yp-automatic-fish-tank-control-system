@@ -5,11 +5,17 @@ class LoginRequestModel {
 }
 
 class LoginResponseModel {
-  bool status;
 
-  LoginResponseModel(this.status);
+  String fname;
+  String lname;
+  String email;
+
+  LoginResponseModel(this.fname,this.lname,this.email);
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(json["status"]);
+    return LoginResponseModel(json["data"]["fname"],json["data"]["lname"],json["data"]["email"]);
   }
+
+  
+
 }

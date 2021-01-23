@@ -6,6 +6,12 @@ import '../sidebar_bloc/sidebarStates.dart';
 import 'sidebar.dart';
 
 class SideBarLayout extends StatefulWidget {
+  final String fname;
+  final String lname;
+  final String email;
+
+  SideBarLayout({this.fname, this.lname, this.email});
+
   @override
   _SideBarLayoutState createState() => _SideBarLayoutState();
 }
@@ -24,15 +30,21 @@ class _SideBarLayoutState extends State<SideBarLayout> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => this.sideBarBloc,
-      child: Stack(
-        children: [
-          BlocBuilder<SideBarBloc, SideBarStates>(
-            builder: (context, state) {
-              return state.updateView();
-            },
-          ),
-          SideBar(),
-        ],
+      child: Scaffold(
+        body: Stack(
+          children: [
+            BlocBuilder<SideBarBloc, SideBarStates>(
+              builder: (context, state) {
+                return state.updateView();
+              },
+            ),
+            SideBar(
+              fname: widget.fname,
+              lname: widget.lname,
+              email: widget.email,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,10 +11,16 @@ class LoginFailedState extends LoginStates {}
 class ConnectionErrorState extends LoginStates {}
 
 class LoggedState extends LoginStates {
-  final LoginRequestModel loginRequestModel;
 
-  LoggedState(this.loginRequestModel);
+  final LoginResponseModel loginResponseModel;
 
-  String get email=>this.loginRequestModel.email;
+  LoggedState(this.loginResponseModel);
+
+  String get email=>this.loginResponseModel.email;
+
+  String get fname=>this.loginResponseModel.fname;
+
+  String get lname=>this.loginResponseModel.lname;
+
 
 }

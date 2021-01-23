@@ -7,6 +7,11 @@ import '../sidebar_bloc/sidebarBloc.dart';
 import '../sidebar_bloc/sidebarEvents.dart';
 
 class SideBar extends StatefulWidget {
+  final String fname;
+  final String lname;
+  final String email;
+  SideBar({this.fname, this.lname, this.email});
+
   @override
   _SideBarState createState() => _SideBarState();
 }
@@ -45,13 +50,13 @@ class _SideBarState extends State<SideBar> {
                   ),
                   ListTile(
                     title: Text(
-                      "Randika Viraj",
+                      widget.fname + " " + widget.lname,
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 30),
                     ),
-                    subtitle: Text("randikavirajmax@gmail.com",
+                    subtitle: Text(widget.lname,
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -139,4 +144,4 @@ class _SideBarState extends State<SideBar> {
   }
 }
 
-mixin StreamController {}
+// mixin StreamController {}
