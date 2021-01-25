@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 import '../functions/alert.dart';
-
 import '../background/background.dart';
 import '../blocs/loginbloc/loginbloc.dart';
 import '../blocs/loginbloc/loginevents.dart';
 import '../models/loginmodel.dart';
 
-class LoginView extends StatelessWidget {
-
+class LoginView extends StatefulWidget {
   final String topic;
   final String message;
-  final bool alertstatus;
+  bool alertstatus;
 
   LoginView({this.topic, this.message, @required this.alertstatus});
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
 
+class _LoginViewState extends State<LoginView> {
+  String useraname = "";
+  String password = "";
   _launchURL(BuildContext context) async {
-
     const url = 'https://youtube.com';
 
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-
       alertMessage(context, "Error", "Something wrong with open browser");
       // throw 'Could not launch $url';
-
     }
   }
 
@@ -36,17 +36,13 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginbloc = BlocProvider.of<LoginBloc>(context);
 
-    String useraname;
-    String password;
-
     Size size = MediaQuery.of(context).size;
 
-
-    if (this.alertstatus) {
+    if (widget.alertstatus) {
       WidgetsBinding.instance.addPostFrameCallback(
-          (duration) => alertMessage(context, this.topic, this.message));
+          (duration) => alertMessage(context, widget.topic, widget.message));
+      widget.alertstatus = false;
     }
-
 
     return Scaffold(
       body: Background(
@@ -122,9 +118,7 @@ class LoginView extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
-
                       await this._launchURL(context);
-
                     },
                     child: Text(
                       "Click Here",

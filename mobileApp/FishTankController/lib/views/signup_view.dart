@@ -1,17 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../background/background.dart';
+import '../blocs/signupbloc/signupbloc.dart';
+import '../blocs/signupbloc/signup_events.dart';
+import '../functions/alert.dart';
+import '../models/signupmodel.dart';
 
-class SignupView extends StatelessWidget {
+class SignupView extends StatefulWidget {
+  bool status;
+  final String topic;
+  final String message;
+  SignupView({this.status = false, this.topic, this.message});
+  @override
+  _SignupViewState createState() => _SignupViewState();
+}
+
+class _SignupViewState extends State<SignupView> {
+  String fname = "";
+  String lname = "";
+  String email = "";
+  String password = "";
+  String confirmPassword = "";
+  bool passwordCheck(String paswd, String confrmpaswd) {
+    if (paswd == confrmpaswd) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    String fname;
-    String lname;
-    String email;
-    String password;
-    String confirmPassword;
+    final signupbloc = BlocProvider.of<SignupBloc>(context);
 
     Size size = MediaQuery.of(context).size;
+
+    if (widget.status) {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (duration) => alertMessage(context, widget.topic, widget.message));
+      widget.status = false;
+    }
 
     return Scaffold(
       body: Background(
@@ -123,7 +152,15 @@ class SignupView extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.3, vertical: 10),
               color: Colors.black,
-              onPressed: () {},
+              onPressed: () {
+                if (this.passwordCheck(password, confirmPassword)) {
+                  signupbloc.add(CallSignupEvent(
+                      SignupRequestModel(fname, lname, email, password)));
+                } else {
+                  alertMessage(
+                      context, "Error", "Confirm Password is not matching");
+                }
+              },
               child: Text(
                 "SIGNUP",
                 style: TextStyle(
