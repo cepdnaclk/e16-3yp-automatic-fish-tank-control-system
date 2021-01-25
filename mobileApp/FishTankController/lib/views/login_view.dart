@@ -21,6 +21,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   String useraname = "";
   String password = "";
+  bool obsecureText=true;
+
   _launchURL(BuildContext context) async {
     const url = 'https://youtube.com';
 
@@ -77,14 +79,16 @@ class _LoginViewState extends State<LoginView> {
                   onChanged: (value) {
                     password = value;
                   },
-                  obscureText: true,
+                  obscureText: this.obsecureText,
                   decoration: InputDecoration(
                       hintText: "Password",
                       icon: Icon(
                         Icons.lock,
                         color: Colors.grey,
                       ),
-                      suffixIcon: Icon(Icons.visibility),
+                      suffixIcon: GestureDetector(
+                        onTap: ()=>this.obsecureText=!this.obsecureText,
+                        child: Icon(Icons.visibility),),
                       border: InputBorder.none),
                 ),
               ),

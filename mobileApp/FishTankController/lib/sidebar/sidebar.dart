@@ -17,7 +17,7 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-  final _animationDuration = Duration(milliseconds: 500);
+  final _animationDuration = Duration(milliseconds: 250);
   bool logout = false;
 
   var screenWidth;
