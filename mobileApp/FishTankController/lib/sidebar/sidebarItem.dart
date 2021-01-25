@@ -7,11 +7,10 @@ class SideBarItem extends StatelessWidget {
   final Color color;
 
   SideBarItem(
-      {@required this.iconData, @required this.itemName, @required this.ontap,@required this.color});
-
-  void onTap(){
-
-  }
+      {@required this.iconData,
+      @required this.itemName,
+      @required this.ontap,
+      @required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +31,7 @@ class SideBarItem extends StatelessWidget {
             Text(
               this.itemName,
               style: TextStyle(
-                  color: this.color,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
+                  color: this.color, fontWeight: FontWeight.bold, fontSize: 20),
             )
           ],
         ),

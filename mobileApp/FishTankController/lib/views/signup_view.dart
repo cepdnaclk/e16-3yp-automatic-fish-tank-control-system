@@ -22,6 +22,21 @@ class _SignupViewState extends State<SignupView> {
   String email = "";
   String password = "";
   String confirmPassword = "";
+  bool passwdvisibility = true;
+  bool confirmpasswdvisibility = true;
+
+  passwdVisibiltyChange() {
+    setState(() {
+      this.passwdvisibility = !this.passwdvisibility;
+    });
+  }
+
+  confirmPasswdVisibiltyChange() {
+    setState(() {
+      this.confirmpasswdvisibility = !this.confirmpasswdvisibility;
+    });
+  }
+
   bool passwordCheck(String paswd, String confrmpaswd) {
     if (paswd == confrmpaswd) {
       return true;
@@ -113,14 +128,17 @@ class _SignupViewState extends State<SignupView> {
                 onChanged: (value) {
                   password = value;
                 },
-                obscureText: true,
+                obscureText: this.passwdvisibility,
                 decoration: InputDecoration(
                     hintText: "Password",
                     icon: Icon(
                       Icons.lock,
                       color: Colors.grey,
                     ),
-                    suffixIcon: Icon(Icons.visibility),
+                    suffixIcon: GestureDetector(
+                      onTap: this.passwdVisibiltyChange,
+                      child: Icon(Icons.visibility),
+                    ),
                     border: InputBorder.none),
               ),
             ),
@@ -133,14 +151,17 @@ class _SignupViewState extends State<SignupView> {
                 onChanged: (value) {
                   confirmPassword = value;
                 },
-                obscureText: true,
+                obscureText: this.confirmpasswdvisibility,
                 decoration: InputDecoration(
                     hintText: "Confirm Password",
                     icon: Icon(
                       Icons.lock,
                       color: Colors.grey,
                     ),
-                    suffixIcon: Icon(Icons.visibility),
+                    suffixIcon: GestureDetector(
+                      onTap: this.confirmPasswdVisibiltyChange,
+                      child: Icon(Icons.visibility),
+                    ),
                     border: InputBorder.none),
               ),
             ),
@@ -157,8 +178,8 @@ class _SignupViewState extends State<SignupView> {
                   signupbloc.add(CallSignupEvent(
                       SignupRequestModel(fname, lname, email, password)));
                 } else {
-                  alertMessage(
-                      context, "Error", "Confirm Password is not matching");
+                  alertMessage(context, "Error",
+                      "Confirm Password is not matching......");
                 }
               },
               child: Text(
