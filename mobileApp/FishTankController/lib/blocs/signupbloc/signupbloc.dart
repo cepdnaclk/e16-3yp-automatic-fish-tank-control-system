@@ -3,12 +3,12 @@ import 'package:sidebar/Repositories/signuprepo.dart';
 import 'package:sidebar/blocs/signupbloc/signup_events.dart';
 import 'package:sidebar/blocs/signupbloc/signup_state.dart';
 
-class SignupBloc extends Bloc {
+class SignupBloc extends Bloc<SignupEvents, SignupState> {
   SignupRepo signupRepo;
   SignupBloc(initialState, this.signupRepo) : super(initialState);
 
   @override
-  Stream mapEventToState(event) async* {
+  Stream<SignupState> mapEventToState(SignupEvents event) async* {
     // TODO: implement mapEventToState
     if (event is CallSignupEvent) {
       yield SignUpCalledState();

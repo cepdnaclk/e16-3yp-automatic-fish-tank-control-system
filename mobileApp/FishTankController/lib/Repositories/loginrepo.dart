@@ -5,7 +5,6 @@ import '../models/loginmodel.dart';
 import '../constants.dart';
 
 class LoginRepo {
-
   LoginResponseModel loginresponse;
 
   Future<String> login(LoginRequestModel obj) async {
@@ -21,6 +20,5 @@ class LoginRepo {
   
   LoginResponseModel get loginResponse{
     return this.loginresponse;
-
   }
 }
