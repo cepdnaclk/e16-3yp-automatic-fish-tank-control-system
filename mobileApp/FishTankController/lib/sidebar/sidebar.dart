@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sidebar/sidebar_bloc/sidebarStates.dart';
 
 import '../sidebar/sidebarItem.dart';
 import '../sidebar_bloc/sidebarBloc.dart';
 import '../sidebar_bloc/sidebarEvents.dart';
+import '../sidebar_bloc/sidebarStates.dart';
 
 class SideBar extends StatefulWidget {
   final String fname;
@@ -18,6 +18,7 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
   final _animationDuration = Duration(milliseconds: 500);
+  bool logout = false;
 
   var screenWidth;
   bool isclickedSidebar = false;
@@ -56,7 +57,7 @@ class _SideBarState extends State<SideBar> {
                           fontWeight: FontWeight.bold,
                           fontSize: 30),
                     ),
-                    subtitle: Text(widget.lname,
+                    subtitle: Text(widget.email,
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -111,10 +112,11 @@ class _SideBarState extends State<SideBar> {
                     builder: (context, state) => SideBarItem(
                       iconData: Icons.logout,
                       itemName: "Log Out",
-                      ontap: () {
-                        BlocProvider.of<SideBarBloc>(context)
-                            .add(LogOutEvent());
-                        this.openSideBar();
+                      ontap: () async {
+                        await onLogoutPresed(context);
+                        if (this.logout) {
+                          Navigator.of(context).pop(true);
+                        }
                       },
                       color: state.logoutColor(),
                     ),
@@ -142,6 +144,41 @@ class _SideBarState extends State<SideBar> {
       ),
     );
   }
-}
 
-// mixin StreamController {}
+  Future<bool> onLogoutPresed(BuildContext context) {
+    return showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => new AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text('Do you want to log out..'),
+            actions: <Widget>[
+              new GestureDetector(
+                onTap: () => Navigator.of(context).pop(true),
+                child: Text(
+                  "NO",
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 16),
+              new GestureDetector(
+                onTap: () {
+                  this.logout = true;
+                  return Navigator.of(context).pop(true);
+                },
+                child: Text("YES",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+}

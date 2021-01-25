@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../functions/onback_pressed.dart';
 import '../sidebar_bloc/sidebarBloc.dart';
 import '../sidebar_bloc/sidebarStates.dart';
 import 'sidebar.dart';
@@ -28,22 +29,25 @@ class _SideBarLayoutState extends State<SideBarLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => this.sideBarBloc,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            BlocBuilder<SideBarBloc, SideBarStates>(
-              builder: (context, state) {
-                return state.updateView();
-              },
-            ),
-            SideBar(
-              fname: widget.fname,
-              lname: widget.lname,
-              email: widget.email,
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () => onBackPressed(context),
+      child: BlocProvider(
+        create: (context) => this.sideBarBloc,
+        child: Scaffold(
+          body: Stack(
+            children: [
+              BlocBuilder<SideBarBloc, SideBarStates>(
+                builder: (context, state) {
+                  return state.updateView();
+                },
+              ),
+              SideBar(
+                fname: widget.fname,
+                lname: widget.lname,
+                email: widget.email,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -55,4 +59,6 @@ class _SideBarLayoutState extends State<SideBarLayout> {
     this.sideBarBloc.close();
     super.dispose();
   }
+
+  
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../background/background.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -8,9 +10,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Text("Home"),
+    return Background(
+      child: Text("hello"),
     );
   }
 }
