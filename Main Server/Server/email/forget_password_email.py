@@ -1,14 +1,19 @@
 import smtplib
 
 from Server.email.config import GMAIL_APP_PASSWORD,GMAIL_USER
+from Server.db.controllers.handlers import retrieve_user
 
 
-def sendEmail(email):
+async def forgetPasswordEmailSend(email):
+    user=await retrieve_user(email)
+    if not user:
+        return
+    password=user['password']
     sent_from = GMAIL_USER
     sent_to = [email,]
-    sent_subject = "Sign Up Sucessfully"
-    sent_body = ("Hey, your have sign up sucessfully.. !\n\n"
-                "\n"
+    sent_subject = "Your Password"
+    sent_body = ("Hey, your password is!\n\n"
+                +password+"\n"
                 "\n"
                 "Cheers,\n"
                 "Fish Com\n")
@@ -30,6 +35,3 @@ def sendEmail(email):
         
     except Exception as exception:
         print("Error: %s!\n\n" % exception)
-        
-
-

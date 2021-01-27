@@ -6,4 +6,6 @@ passlib[bcrypt]
 pydantic[email]
 influxdb
 paho-mqtt
+requests
+
 

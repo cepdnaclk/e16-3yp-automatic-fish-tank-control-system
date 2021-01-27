@@ -10,6 +10,7 @@ from Server.db.controllers.handlers import retrieve_user, add_user, update_user_
 from Server.db.schemas.userschema import SignUpSchema, ProfileSchema, UserSchema, ConfirmCode, AppData, ChangePassword,Login
 from Server.controllers.config import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from Server.email.handlers import sendEmail
+from Server.email.forget_password_email import forgetPasswordEmailSend
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -50,12 +51,20 @@ def read_root():
     return {"msg": "hello"}
 
 
-# @app.post("/forgetpassword")
-# def forgetPassword(response: Response, body: AppData = Body(...)):
-#     if len(body.email) != 0:
-#         return
-#     else:
-#         return
+@app.post("/forgetpassword")
+async def forgetPassword(response: Response, body: AppData = Body(...)):
+    try:
+        await forgetPasswordEmailSend(body.email)
+        return {"status":True}
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_417_EXPECTATION_FAILED,
+            detail="Somethimg failed",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
+        
+   
 
 
 @app.post("/login")
@@ -109,6 +118,7 @@ async def signup(response: Response, signupuser: SignUpSchema = Body(...)):
     if new_profile:
         access_token = setToken(signupuser.email)
         response.headers["Authorization"] = "Bearer "+access_token
+        sendEmail(user['email'])
         return {"status": True}
     return {"status": False}
 
@@ -153,7 +163,7 @@ async def changePassword(response: Response, body: ChangePassword = Body(...)):
     )
 
 
-@app.post("/confirmation")
-async def confirm(response: Response, body: ConfirmCode = Body(...)):
-    sendEmail(body.email, body.code)
-    return {"status": True}
+# @app.post("/confirmation")
+# async def confirm(response: Response, body: ConfirmCode = Body(...)):
+#     sendEmail(body.email, body.code)
+#     return {"status": True}

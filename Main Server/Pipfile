@@ -19,6 +19,8 @@ install = "*"
 aiofiles = "*"
 jinja2 = "*"
 python-multipart = "*"
+requests = "*"
+fastapi-limiter = "*"
 
 [requires]
 python_version = "3.7"
