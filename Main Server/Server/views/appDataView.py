@@ -3,8 +3,8 @@ from typing import Optional
 
 
 from Server import app
-from Server.db.schemas.userschema import AddTank, RetriveData, AppData
-from Server.db.controllers.tankHandlers import addNewTank
+from Server.db.schemas.userschema import AddTank, RetriveData, AppData, Device
+from Server.db.controllers.tankHandlers import addNewTank, getFishNamesFromDB
 from Server.db.controllers.influxHandlers import retriveData
 from Server.db.controllers.appHandlers import getAppData
 from Server.views.userView import setToken
@@ -27,7 +27,7 @@ async def addTank(response: Response, Authorization: Optional[str] = Header(None
     tank["height"] = body.height
     tank["lenght"] = body.lenght
     tank["width"] = body.width
-    
+
     if (await addNewTank(tank, body.email)):
         access_token = setToken(body.email)
         response.headers["Authorization"] = "Bearer "+access_token
@@ -73,4 +73,26 @@ async def retriveDevicesData(response: Response, Authorization: Optional[str] = 
         )
     access_token = setToken(body.email)
     response.headers["Authorization"] = "Bearer "+access_token
-    return { "data": data}
+    return {"data": data}
+
+
+@app.post("/app/fishnames")
+async def getFishNames(response: Response, Authorization: Optional[str] = Header(None), body: Device = Body(...)):
+    user = await token_check(Authorization)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authorization Error",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    else:
+        print("in")
+        try:
+            data = await getFishNamesFromDB(body.device_id)
+            return data
+        except:
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                detail="Incorrect Tank Id",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
