@@ -7,5 +7,8 @@ pydantic[email]
 influxdb
 paho-mqtt
 requests
+<<<<<<< HEAD
 
+=======
+>>>>>>> 56f9d2d9bc24139a35297f2703b643017da15550
 

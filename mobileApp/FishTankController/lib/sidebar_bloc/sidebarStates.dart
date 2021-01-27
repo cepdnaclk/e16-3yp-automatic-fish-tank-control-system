@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../views/home.dart';
-import '../views/logout.dart';
 import '../views/more.dart';
 import '../views/tanks.dart';
 
@@ -100,38 +99,6 @@ class MoreState extends SideBarStates {
   Color moreColor() {
     // TODO: implement moreColor
     return Colors.pink;
-  }
-
-  @override
-  Color tankColor() {
-    // TODO: implement tankColor
-    return Colors.white;
-  }
-}
-
-class LogOutState extends SideBarStates {
-  @override
-  Widget updateView() {
-    // TODO: implement updateView
-    return LogOut();
-  }
-
-  @override
-  Color homeColor() {
-    // TODO: implement homeColor
-    return Colors.white;
-  }
-
-  @override
-  Color logoutColor() {
-    // TODO: implement logoutColor
-    return Colors.pink;
-  }
-
-  @override
-  Color moreColor() {
-    // TODO: implement moreColor
-    return Colors.white;
   }
 
   @override

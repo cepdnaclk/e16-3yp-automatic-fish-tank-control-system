@@ -6,4 +6,3 @@ class MoreEvent extends SideBarEventS {}
 
 class TankEvent extends SideBarEventS {}
 
-class LogOutEvent extends SideBarEventS {}
