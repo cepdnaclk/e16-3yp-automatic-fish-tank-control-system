@@ -22,19 +22,19 @@ class SignUp extends StatelessWidget {
             return SignupView(
               status: true,
               topic: "Sign Up Failed",
-              message: "Sign up is failed ,check your email",
+              message: "Sign up is failed ,check your email,seems you are already signup....",
             );
           } else if (state is SignupedState) {
             return SignupView(
               status: true,
               topic: "Done",
-              message: "Sign up copleted ,you can log in now",
+              message: "Sign up copleted ,you can log in now....",
             );
           } else if (state is ConnectionErrorState) {
             return SignupView(
               status: true,
               topic: "Connection Error",
-              message: "Check your network connection",
+              message: "Check your network connection...",
             );
           }
         },

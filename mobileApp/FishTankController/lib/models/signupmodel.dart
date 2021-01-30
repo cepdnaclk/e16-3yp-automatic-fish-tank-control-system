@@ -5,6 +5,15 @@ class SignupRequestModel {
   String password;
 
   SignupRequestModel(this.fname, this.lname, this.email, this.password);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'fname': fname,
+      'lname': lname,
+      'email': email,
+      'password':password
+    };
+  }
 }
 
 class SignupResponseModel {

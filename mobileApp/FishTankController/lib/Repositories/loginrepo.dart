@@ -8,14 +8,12 @@ class LoginRepo {
   LoginResponseModel loginresponse;
 
   Future<String> login(LoginRequestModel obj) async {
-    // final result = await http.post(LOGINURL, body: jsonEncode(obj));
-    // if (result.statusCode != 200) {
-    //   return '';
-    // }
-    // this.loginresponse = LoginResponseModel.fromJson(jsonDecode(result.body));
-    // return result.headers['Authorization'];
-    this.loginresponse=LoginResponseModel("fname", "lname", "myemail@.com");
-   return 'token';
+    final result = await http.post(LOGINURL, body: json.encode(obj.toMap()));
+    if (result.statusCode != 200) {
+      return '';
+    }
+    this.loginresponse = LoginResponseModel.fromJson(jsonDecode(result.body));
+    return result.headers['authorization'];
   }
   
   LoginResponseModel get loginResponse{

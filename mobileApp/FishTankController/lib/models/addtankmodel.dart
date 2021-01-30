@@ -17,6 +17,17 @@ class AddTankRequestModel {
       @required this.height,
       @required this.lenght,
       @required this.width});
-}
 
+  Map<String, dynamic> toMap() {
+    return {
+      "email": email,
+      "device_id": device_id,
+      "fish_names": fish_names,
+      "fish_count": fish_count,
+      "height": height,
+      "lenght": lenght,
+      "width": width
+    };
+  }
+}
 
