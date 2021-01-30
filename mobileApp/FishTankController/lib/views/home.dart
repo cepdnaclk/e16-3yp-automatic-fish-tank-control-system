@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../background/background.dart';
+import '../sidebar_bloc/sidebarBloc.dart';
+import '../sidebar_bloc/sidebarEvents.dart';
 
 class Home extends StatefulWidget {
+  List<String> idarray;
+  String email;
+  Home({@required this.idarray, @required this.email});
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List<String> idarray = [
-    "1000000",
-    "1111111",
-    "102546600",
-    "3200001111",
-    "1000000",
-    "1111111",
-    "102546600",
-    "3200001111",
-    "1000000",
-    "1111111",
-    "102546600",
-    "3200001111",
-    "1000000",
-    "1111111",
-    "102546600",
-    "3200001111"
-  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,7 +27,7 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: size.height * 0.2,
             ),
-            ...setTankIdButtons(this.idarray, size)
+            ...setTankIdButtons(widget.idarray, size)
           ],
         ),
       ),
@@ -58,7 +46,8 @@ class _HomeState extends State<Home> {
           elevation: 6,
           padding:
               EdgeInsets.symmetric(horizontal: size.width * 0.2, vertical: 10),
-          onPressed: () => null,
+          onPressed: () => BlocProvider.of<SideBarBloc>(context)
+              .add(OneTankSelectedEvent(tankid: item, email: widget.email)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

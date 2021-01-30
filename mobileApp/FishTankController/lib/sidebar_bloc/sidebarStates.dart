@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../sidebar_bloc/sidebarEvents.dart';
-import '../views/home.dart';
 import '../views/more.dart';
 import '../views/spine_view.dart';
 import '../views/tanks.dart';
@@ -56,10 +55,25 @@ class HomeState extends SideBarStates {
 }
 
 class TanksState extends SideBarStates {
+  String topic;
+  String message;
+  bool isshowMessage;
+  bool isAuthFailed;
+
+  TanksState(
+      {this.topic,
+      this.message,
+      this.isAuthFailed,
+      @required this.isshowMessage});
   @override
   Widget updateView() {
     // TODO: implement updateView
-    return Tanks();
+    return Tanks(
+      showMessage: this.isshowMessage,
+      isAuthfailed: this.isAuthFailed,
+      message: this.message,
+      topic: this.topic,
+    );
   }
 
   @override

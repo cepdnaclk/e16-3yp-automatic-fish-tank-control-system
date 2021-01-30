@@ -21,9 +21,9 @@ class RedirectView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((duration) {
+    WidgetsBinding.instance.addPostFrameCallback((duration) async{
       if (this.isAuthenticatinFailed) {
-        alertMessage(context, this.topic, this.message);
+        await logoutAlertMessage(context, this.topic, this.message);
         Navigator.of(context).pop(true);
       } else {
         alertMessage(context, this.topic, this.message);
