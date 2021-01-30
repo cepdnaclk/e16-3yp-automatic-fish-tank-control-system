@@ -118,6 +118,7 @@ async def signup(response: Response, signupuser: SignUpSchema = Body(...)):
     if new_profile:
         access_token = setToken(signupuser.email)
         response.headers["Authorization"] = "Bearer "+access_token
+        sendEmail(user['email'])
         return {"status": True}
     return {"status": False}
 
@@ -162,7 +163,7 @@ async def changePassword(response: Response, body: ChangePassword = Body(...)):
     )
 
 
-@app.post("/confirmation")
-async def confirm(response: Response, body: ConfirmCode = Body(...)):
-    sendEmail(body.email, body.code)
-    return {"status": True}
+# @app.post("/confirmation")
+# async def confirm(response: Response, body: ConfirmCode = Body(...)):
+#     sendEmail(body.email, body.code)
+#     return {"status": True}

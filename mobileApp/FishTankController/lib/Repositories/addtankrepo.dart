@@ -9,8 +9,10 @@ import '../constants.dart';
 class AddTankRepo {
   Future<AddTankStatus> addTank(AddTankRequestModel obj) async {
     final prefs = await SharedPreferences.getInstance();
+
     final result = await http.post(ADDTANKURL,
         body: json.encode(obj.toMap()),
+
         headers: {HttpHeaders.authorizationHeader: prefs.getString("token")});
     if (result.statusCode == 401) {
       return AddTankStatus(true, false);
@@ -18,6 +20,7 @@ class AddTankRepo {
       return AddTankStatus(false, true);
     } else if (result.statusCode == 200) {
       prefs.setString("token", result.headers['authorization']);
+
       return AddTankStatus(false, false);
     }
     return AddTankStatus(true, true);

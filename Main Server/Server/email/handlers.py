@@ -3,12 +3,12 @@ import smtplib
 from Server.email.config import GMAIL_APP_PASSWORD,GMAIL_USER
 
 
-def sendEmail(email,code):
+def sendEmail(email):
     sent_from = GMAIL_USER
     sent_to = [email,]
-    sent_subject = "Confirmation Code"
-    sent_body = ("Hey, your confirmation code !\n\n"
-                +code+"\n"
+    sent_subject = "Sign Up Sucessfully"
+    sent_body = ("Hey, your have sign up sucessfully.. !\n\n"
+                "\n"
                 "\n"
                 "Cheers,\n"
                 "Fish Com\n")
