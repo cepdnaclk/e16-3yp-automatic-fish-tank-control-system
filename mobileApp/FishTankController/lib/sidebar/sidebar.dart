@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sidebar/Repositories/tankidrepo.dart';
 
 import '../sidebar/sidebarItem.dart';
 import '../sidebar_bloc/sidebarBloc.dart';
@@ -10,7 +11,8 @@ class SideBar extends StatefulWidget {
   final String fname;
   final String lname;
   final String email;
-  SideBar({this.fname, this.lname, this.email});
+  final bool isloading;
+  SideBar({this.fname, this.lname, this.email, @required this.isloading});
 
   @override
   _SideBarState createState() => _SideBarState();
@@ -24,6 +26,10 @@ class _SideBarState extends State<SideBar> {
   bool isclickedSidebar = false;
 
   void openSideBar() async {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
     setState(() {
       this.isclickedSidebar = !this.isclickedSidebar;
     });
@@ -38,7 +44,9 @@ class _SideBarState extends State<SideBar> {
       curve: Curves.linear,
       bottom: 0,
       left: this.isclickedSidebar ? 0 : -this.screenWidth,
-      right: this.isclickedSidebar ? 0 : this.screenWidth - 34,
+      right: this.isclickedSidebar
+          ? 0
+          : (widget.isloading ? this.screenWidth + 10 : this.screenWidth - 34),
       child: Row(
         children: [
           Expanded(
@@ -80,7 +88,10 @@ class _SideBarState extends State<SideBar> {
                       iconData: Icons.home,
                       itemName: "Home",
                       ontap: () {
-                        BlocProvider.of<SideBarBloc>(context).add(HomeEvent());
+                        BlocProvider.of<SideBarBloc>(context).add(LoadingEvent(
+                            nextevent: HomeEvent(
+                                email: widget.email,
+                                tankIdRepo: TankIdRepo())));
                         this.openSideBar();
                       },
                       color: state.homeColor(),
@@ -89,7 +100,7 @@ class _SideBarState extends State<SideBar> {
                   BlocBuilder<SideBarBloc, SideBarStates>(
                     builder: (context, state) => SideBarItem(
                       iconData: Icons.bar_chart,
-                      itemName: "Tanks",
+                      itemName: "Add Tank",
                       ontap: () {
                         BlocProvider.of<SideBarBloc>(context).add(TankEvent());
                         this.openSideBar();
