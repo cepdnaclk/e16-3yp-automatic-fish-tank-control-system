@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../functions/onback_pressed.dart';
+import '../Repositories/tankidrepo.dart';
 import '../sidebar_bloc/sidebarBloc.dart';
+import '../sidebar_bloc/sidebarEvents.dart';
 import '../sidebar_bloc/sidebarStates.dart';
 import 'sidebar.dart';
 
@@ -23,7 +25,12 @@ class _SideBarLayoutState extends State<SideBarLayout> {
   @override
   void initState() {
     // TODO: implement initState
-    this.sideBarBloc = SideBarBloc(HomeState());
+    this.sideBarBloc = SideBarBloc(LoadingState(
+        homecolor: Colors.pink,
+        logoutcolor: Colors.white,
+        morecolor: Colors.white,
+        tankcolor: Colors.white,
+        event: HomeEvent(email: widget.email, tankIdRepo: TankIdRepo())));
     super.initState();
   }
 
@@ -34,19 +41,24 @@ class _SideBarLayoutState extends State<SideBarLayout> {
       child: BlocProvider(
         create: (context) => this.sideBarBloc,
         child: Scaffold(
-          body: Stack(
-            children: [
-              BlocBuilder<SideBarBloc, SideBarStates>(
-                builder: (context, state) {
-                  return state.updateView();
-                },
-              ),
-              SideBar(
-                fname: widget.fname,
-                lname: widget.lname,
-                email: widget.email,
-              ),
-            ],
+          body: BlocBuilder<SideBarBloc, SideBarStates>(
+            builder: (context, state) {
+              if (state is LoadingState) {
+                BlocProvider.of<SideBarBloc>(context).add(state.getEvent());
+              }
+
+              return Stack(
+                children: [
+                  state.updateView(),
+                  SideBar(
+                    fname: widget.fname,
+                    lname: widget.lname,
+                    email: widget.email,
+                    isloading: state.isLoading(),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -59,6 +71,4 @@ class _SideBarLayoutState extends State<SideBarLayout> {
     this.sideBarBloc.close();
     super.dispose();
   }
-
-  
 }

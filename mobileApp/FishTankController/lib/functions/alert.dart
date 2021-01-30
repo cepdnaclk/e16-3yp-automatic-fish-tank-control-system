@@ -24,3 +24,27 @@ alertMessage(BuildContext context, String topic, String message) {
     },
   );
 }
+
+
+Future<bool> logoutAlertMessage(BuildContext context,String topic, String message) {
+  return showDialog(
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: new Text(topic),
+          content: new Text(message),
+          actions: <Widget>[
+            SizedBox(height: 16),
+            new GestureDetector(
+              onTap: () => Navigator.of(context).pop(true),
+              child: Text("OK",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ],
+        ),
+      ) ??
+      false;
+}

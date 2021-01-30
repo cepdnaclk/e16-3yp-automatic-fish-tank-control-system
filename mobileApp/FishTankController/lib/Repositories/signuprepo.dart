@@ -6,8 +6,8 @@ import '../constants.dart';
 
 class SignupRepo {
   Future<bool> signup(SignupRequestModel obj) async {
-    final result = await http.post(SIGNUPURL, body: jsonEncode(obj));
-
+    final result = await http.post(SIGNUPURL, body: json.encode(obj.toMap()));
+    
     if (result.statusCode != 200) {
       return false;
     }

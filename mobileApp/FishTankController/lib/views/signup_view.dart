@@ -108,7 +108,7 @@ class _SignupViewState extends State<SignupView> {
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextField(
                 onChanged: (value) {
-                  lname = value;
+                  email = value;
                 },
                 decoration: InputDecoration(
                     icon: Icon(

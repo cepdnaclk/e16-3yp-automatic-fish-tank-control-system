@@ -101,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                     horizontal: size.width * 0.3, vertical: 10),
                 color: Colors.black,
                 onPressed: () => loginbloc.add(CallLoginEvent(
-                    LoginRequestModel(email: useraname, passord: password))),
+                    LoginRequestModel(email: useraname, password: password))),
                 child: Text(
                   "LOGIN",
                   style: TextStyle(

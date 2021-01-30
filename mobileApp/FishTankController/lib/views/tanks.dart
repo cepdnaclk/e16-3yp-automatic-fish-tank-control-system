@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../background/background.dart';
+import '../functions/alert.dart';
+import '../models/addtankmodel.dart';
+import '../Repositories/addtankrepo.dart';
+import '../sidebar_bloc/sidebarBloc.dart';
+import '../sidebar_bloc/sidebarEvents.dart';
 
 class Tanks extends StatefulWidget {
+  final bool isAuthfailed;
+  final String message;
+  final String topic;
+  bool showMessage;
+
+  Tanks(
+      {this.isAuthfailed,
+      this.message,
+      this.topic,
+      @required this.showMessage});
+
   @override
   _TanksState createState() => _TanksState();
 }
 
 class _TanksState extends State<Tanks> {
+  String tankid;
+  String email;
+  int height;
+  int width;
+  int length;
+
   int noofaddwidgests = 0;
   List<String> fishnames = [
     "",
@@ -18,6 +41,18 @@ class _TanksState extends State<Tanks> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((duration) async {
+      if (widget.showMessage) {
+        if (widget.isAuthfailed) {
+          await logoutAlertMessage(context, widget.topic, widget.message);
+          Navigator.of(context).pop(true);
+        } else {
+          alertMessage(context, widget.topic, widget.message);
+        }
+        widget.showMessage = false;
+      }
+    });
+
     Size size = MediaQuery.of(context).size;
 
     return Background(
@@ -35,7 +70,7 @@ class _TanksState extends State<Tanks> {
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextField(
                 onChanged: (value) {
-                  // confirmPassword = value;
+                  this.tankid = value;
                 },
                 decoration: InputDecoration(
                     hintText: "Tank ID",
@@ -51,7 +86,7 @@ class _TanksState extends State<Tanks> {
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextField(
                 onChanged: (value) {
-                  // confirmPassword = value;
+                  this.email = value;
                 },
                 decoration: InputDecoration(
                     hintText: "Email",
@@ -66,8 +101,9 @@ class _TanksState extends State<Tanks> {
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextField(
+                keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  // confirmPassword = value;
+                  this.height = int.parse(value);
                 },
                 decoration: InputDecoration(
                     hintText: "Height",
@@ -82,8 +118,9 @@ class _TanksState extends State<Tanks> {
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextField(
+                keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  // confirmPassword = value;
+                  this.width = int.parse(value);
                 },
                 decoration: InputDecoration(
                     hintText: "Width",
@@ -98,8 +135,9 @@ class _TanksState extends State<Tanks> {
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               decoration: BoxDecoration(color: Colors.grey[200]),
               child: TextField(
+                keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  // confirmPassword = value;
+                  this.length = int.parse(value);
                 },
                 decoration: InputDecoration(
                     hintText: "Length",
@@ -156,7 +194,18 @@ class _TanksState extends State<Tanks> {
             ),
             RaisedButton(
               color: Colors.grey,
-              onPressed: () => null,
+              onPressed: () => BlocProvider.of<SideBarBloc>(context).add(
+                  LoadingEvent(
+                      nextevent: AddTankClickedEvent(
+                          addTankRepo: AddTankRepo(),
+                          addTankRequestModel: AddTankRequestModel(
+                              device_id: this.tankid,
+                              email: this.email,
+                              fish_count: this.fishcount,
+                              fish_names: this.fishnames,
+                              height: this.height,
+                              lenght: this.length,
+                              width: this.width)))),
               child: Text(
                 "SAVE",
                 style: TextStyle(fontWeight: FontWeight.bold),
