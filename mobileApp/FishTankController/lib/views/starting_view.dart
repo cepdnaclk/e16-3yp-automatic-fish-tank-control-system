@@ -12,11 +12,23 @@ class StartingView extends StatelessWidget {
     return Background(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             children: [
               SizedBox(
-                height: size.height * 0.4,
+                height: size.height * 0.1,
+              ),
+              Text(
+                "Fish Tank Controller",
+                style: TextStyle(
+                    fontFamily: 'SquadaOne',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50),
+                    textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: size.height * 0.07,
               ),
               StartingViewButton(
                 name: "LOGIN",

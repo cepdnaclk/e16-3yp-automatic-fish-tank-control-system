@@ -8,7 +8,6 @@ import '../models/tankidmodel.dart';
 
 class TankIdRepo {
   Future<List<String>> tankIds(String email) async {
-
     final prefs = await SharedPreferences.getInstance();
     final result = await http.post(GETTANKIDSURL,
         body: json.encode(RequestTankIdsModel(email).toMap()),
@@ -41,6 +40,5 @@ class TankIdRepo {
     //   "3200001111"
     // ];
     // return idarray;
-
   }
 }

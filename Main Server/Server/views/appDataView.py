@@ -86,7 +86,6 @@ async def getFishNames(response: Response, Authorization: Optional[str] = Header
             headers={"WWW-Authenticate": "Bearer"},
         )
     else:
-        print("in")
         try:
             data = await getFishNamesFromDB(body.device_id)
             return data

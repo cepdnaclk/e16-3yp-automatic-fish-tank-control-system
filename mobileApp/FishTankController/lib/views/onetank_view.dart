@@ -42,7 +42,6 @@ class _OneTankViewState extends State<OneTankView> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -299,6 +298,5 @@ class _OneTankViewState extends State<OneTankView> {
       alertMessage(
           context, "Connection Failed", "Check your network connection....");
     }
-
   }
 }
