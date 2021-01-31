@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sidebar/functions/onback_pressed.dart';
 
 import '../background/background.dart';
+import '../models/deletetankmodel.dart';
+import '../Repositories/deletetankrepo.dart';
 import '../sidebar_bloc/sidebarBloc.dart';
 import '../sidebar_bloc/sidebarEvents.dart';
 
@@ -40,6 +43,17 @@ class _HomeState extends State<Home> {
     for (var item in list) {
       widgetlist.add(
         RaisedButton(
+          onLongPress: () async {
+            if (await onBackPressed(
+                context, 'Do you want to delete this id?')) {
+              BlocProvider.of<SideBarBloc>(context).add(LoadingEvent(
+                nextevent: DeleteTankEvent(
+                    deleteTankRepo: DeleteTankRepo(),
+                    deleteTankRequestModel: DeleteTankRequestModel(
+                        device_id: item, email: widget.email)),
+              ));
+            }
+          },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
               side: BorderSide(color: Colors.black)),

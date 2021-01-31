@@ -37,7 +37,7 @@ class _SideBarLayoutState extends State<SideBarLayout> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => onBackPressed(context),
+      onWillPop: () => onBackPressed(context,'Do you want to log out..'),
       child: BlocProvider(
         create: (context) => this.sideBarBloc,
         child: Scaffold(
