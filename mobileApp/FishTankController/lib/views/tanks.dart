@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../background/background.dart';
 import '../functions/alert.dart';
@@ -152,15 +153,14 @@ class _TanksState extends State<Tanks> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: size.width * 0.4,
+                    width: size.width * 0.3,
                   ),
                   IconButton(
-                    highlightColor: Colors.green,
                     iconSize: 20,
                     icon: Icon(
-                      Icons.remove,
+                      MdiIcons.cardRemove,
                       size: 50,
-                      color: Colors.red,
+                      color: Colors.black,
                     ),
                     onPressed: () {
                       setState(() {
@@ -172,13 +172,16 @@ class _TanksState extends State<Tanks> {
                       });
                     },
                   ),
+                  SizedBox(
+                    width: size.width * 0.08,
+                  ),
                   IconButton(
                     highlightColor: Colors.green,
-                    iconSize: 20,
+                    iconSize: 21,
                     icon: Icon(
-                      Icons.add,
-                      size: 50,
-                      color: Colors.red,
+                      MdiIcons.basketPlus,
+                      size: 49,
+                      color: Colors.black,
                     ),
                     onPressed: () {
                       setState(() {
@@ -190,7 +193,7 @@ class _TanksState extends State<Tanks> {
                   ),
                 ]),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             RaisedButton(
               color: Colors.grey,

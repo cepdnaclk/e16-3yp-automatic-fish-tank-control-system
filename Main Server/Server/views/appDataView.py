@@ -3,8 +3,8 @@ from typing import Optional
 
 
 from Server import app
-from Server.db.schemas.userschema import AddTank, RetriveData, AppData, Device
-from Server.db.controllers.tankHandlers import addNewTank, getFishNamesFromDB
+from Server.db.schemas.userschema import AddTank, RetriveData, AppData, Device, DeleteTank
+from Server.db.controllers.tankHandlers import addNewTank, getFishNamesFromDB,removeTank
 from Server.db.controllers.influxHandlers import retriveData
 from Server.db.controllers.appHandlers import getAppData
 from Server.views.userView import setToken
@@ -89,6 +89,29 @@ async def getFishNames(response: Response, Authorization: Optional[str] = Header
         try:
             data = await getFishNamesFromDB(body.device_id)
             return data
+        except:
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                detail="Incorrect Tank Id",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+
+
+@app.post("/app/deletetank")
+async def deleteTank(response: Response, Authorization: Optional[str] = Header(None), body: DeleteTank = Body(...)):
+    user = await token_check(Authorization)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authorization Error",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    else:
+        try:
+            await removeTank(body.email,body.device_id)
+            access_token = setToken(body.email)
+            response.headers["Authorization"] = "Bearer "+access_token
+            return {"status":True}
         except:
             raise HTTPException(
                 status_code=status.HTTP_406_NOT_ACCEPTABLE,
