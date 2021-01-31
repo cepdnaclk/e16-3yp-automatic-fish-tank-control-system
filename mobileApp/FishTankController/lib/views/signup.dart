@@ -28,7 +28,7 @@ class SignUp extends StatelessWidget {
             return SignupView(
               status: true,
               topic: "Done",
-              message: "Sign up copleted ,you can log in now....",
+              message: "Sign up completed ,you can log in now....",
             );
           } else if (state is ConnectionErrorState) {
             return SignupView(
