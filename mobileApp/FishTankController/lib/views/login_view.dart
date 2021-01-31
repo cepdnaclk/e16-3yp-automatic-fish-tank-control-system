@@ -29,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      alertMessage(context, "Error", "Something wrong with open browser");
+      alertMessage(context, "Error", "Unable to launch browser. Try again !");
       // throw 'Could not launch $url';
     }
   }

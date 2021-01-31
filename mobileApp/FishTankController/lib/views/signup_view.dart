@@ -78,7 +78,7 @@ class _SignupViewState extends State<SignupView> {
                       fname = value;
                     },
                     decoration: InputDecoration(
-                        hintText: "Frist Name",
+                        hintText: "First Name",
                         icon: Icon(
                           Icons.person,
                           color: Colors.grey,
@@ -178,8 +178,8 @@ class _SignupViewState extends State<SignupView> {
                   signupbloc.add(CallSignupEvent(
                       SignupRequestModel(fname, lname, email, password)));
                 } else {
-                  alertMessage(context, "Error",
-                      "Confirm Password is not matching......");
+                  alertMessage(context, "Password Missmatch!",
+                      "Enter the same password again");
                 }
               },
               child: Text(

@@ -19,6 +19,14 @@ class SideBarBloc extends Bloc<SideBarEventS, SideBarStates> {
       try {
         List<String> tankids = await event.tankIdRepo.tankIds(event.email);
         if (tankids != null) {
+          if (tankids.length == 0) {
+            yield HomeState(RedirectView(
+              email: event.email,
+              isAuthenticatinFailed: false,
+              message: "No Tanks",
+              topic: "Hey,you haven't added tanks yet..",
+            ));
+          }
           yield HomeState(Home(
             idarray: tankids,
             email: event.email,

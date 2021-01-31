@@ -25,7 +25,7 @@ class LogIn extends StatelessWidget {
             return LoginView(
               alertstatus: true,
               topic: "Connection Failed",
-              message: "Something wrong with connection,check your network",
+              message: "Check your network status and try again!",
             );
           } else if (state is LoggedState) {
             return SideBarLayout(
@@ -36,8 +36,8 @@ class LogIn extends StatelessWidget {
           } else if (state is LoginFailedState) {
             return LoginView(
               alertstatus: true,
-              topic: "Login Failed",
-              message: "Invalid login,try again...",
+              topic: "Invalid Login Details",
+              message: "Please try again!",
             );
           }
         },

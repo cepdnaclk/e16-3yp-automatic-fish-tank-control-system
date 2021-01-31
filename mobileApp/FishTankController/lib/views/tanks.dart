@@ -74,7 +74,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Tank ID",
-                    helperText: "Enter your tank id here..",
+                    helperText: "Enter the tank id.",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -90,7 +90,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Email",
-                    helperText: "Enter your account email here..",
+                    helperText: "Enter the email address.",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -107,7 +107,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Height",
-                    helperText: "Enter your tank height  here..",
+                    helperText: "Enter the tank height.",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -124,7 +124,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Width",
-                    helperText: "Enter your tank width here..",
+                    helperText: "Enter the tank width.",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -141,7 +141,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Length",
-                    helperText: "Enter your tank length here..",
+                    helperText: "Enter the tank length.",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -237,7 +237,7 @@ class _TanksState extends State<Tanks> {
                 this.fishnames[i] = value;
               },
               decoration: InputDecoration(
-                  hintText: "Fish Name",
+                  hintText: "Fish Type",
                   border: new OutlineInputBorder(
                       borderSide: new BorderSide(color: Colors.teal))),
             ),
