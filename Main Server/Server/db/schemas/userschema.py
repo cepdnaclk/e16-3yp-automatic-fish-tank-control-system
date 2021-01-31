@@ -69,3 +69,8 @@ class ChangePassword(BaseModel):
     old_password: str
     new_password: str
     email: EmailStr = Field(...)
+    
+class DeleteTank(BaseModel):
+    email: EmailStr = Field(...)
+    device_id: str
+    
