@@ -6,6 +6,7 @@ import '../sidebar_bloc/sidebarEvents.dart';
 import '../sidebar_bloc/sidebarStates.dart';
 import '../views/home.dart';
 import '../views/redirect_view.dart';
+import '../Repositories/tankidrepo.dart';
 import '../views/onetank_view.dart';
 
 class SideBarBloc extends Bloc<SideBarEventS, SideBarStates> {
@@ -23,14 +24,15 @@ class SideBarBloc extends Bloc<SideBarEventS, SideBarStates> {
             yield HomeState(RedirectView(
               email: event.email,
               isAuthenticatinFailed: false,
-              message: "No Tanks",
-              topic: "Hey,you haven't added tanks yet..",
+              message: "Hey,you haven't added tanks yet..",
+              topic: "NO TANK",
+            ));
+          } else {
+            yield HomeState(Home(
+              idarray: tankids,
+              email: event.email,
             ));
           }
-          yield HomeState(Home(
-            idarray: tankids,
-            email: event.email,
-          ));
         } else {
           yield HomeState(RedirectView(
             email: event.email,
@@ -99,6 +101,18 @@ class SideBarBloc extends Bloc<SideBarEventS, SideBarStates> {
             topic: "Connection Failed",
             message: "Connection failed,check your network connection..");
       }
+    } else if (event is DeleteTankEvent) {
+      try {
+        await event.deleteTankRepo.deleteTank(event.deleteTankRequestModel);
+      } catch (e) {}
+      yield LoadingState(
+          homecolor: Colors.pink,
+          logoutcolor: Colors.white,
+          morecolor: Colors.white,
+          tankcolor: Colors.white,
+          event: HomeEvent(
+              email: event.deleteTankRequestModel.email,
+              tankIdRepo: TankIdRepo()));
     }
   }
 }
