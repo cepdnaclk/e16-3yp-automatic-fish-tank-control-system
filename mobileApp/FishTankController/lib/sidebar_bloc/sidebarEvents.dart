@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 import '../models/addtankmodel.dart';
+import '../models/deletetankmodel.dart';
 import '../Repositories/addtankrepo.dart';
+import '../Repositories/deletetankrepo.dart';
 import '../Repositories/tankidrepo.dart';
 
 abstract class SideBarEventS {}
@@ -31,8 +33,15 @@ class LoadingEvent extends SideBarEventS {
   SideBarEventS get nextEvent => this.nextevent;
 }
 
-class OneTankSelectedEvent extends SideBarEventS{
+class OneTankSelectedEvent extends SideBarEventS {
   String tankid;
   String email;
-  OneTankSelectedEvent({@required this.tankid,@required this.email});
+  OneTankSelectedEvent({@required this.tankid, @required this.email});
+}
+
+class DeleteTankEvent extends SideBarEventS {
+  DeleteTankRepo deleteTankRepo;
+  DeleteTankRequestModel deleteTankRequestModel;
+  DeleteTankEvent(
+      {@required this.deleteTankRequestModel, @required this.deleteTankRepo});
 }

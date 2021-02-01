@@ -176,7 +176,6 @@ class _TanksState extends State<Tanks> {
                     width: size.width * 0.08,
                   ),
                   IconButton(
-                    highlightColor: Colors.green,
                     iconSize: 21,
                     icon: Icon(
                       MdiIcons.basketPlus,
