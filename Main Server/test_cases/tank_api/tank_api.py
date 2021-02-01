@@ -1,7 +1,7 @@
 import requests
 import json
 
-from test_cases.user.user import Url
+from user.user import Url
 
 
 def sendErrorFromMicroController(id: str, msg: str):
@@ -15,9 +15,14 @@ def sendErrorFromMicroController(id: str, msg: str):
     if(r.status == 200):
         print("Error control  signaling sucess")
         print(r.json)
+        return True
+    elif (r.status_code==422):
+        print("Validation error")
+        return False
     else:
         print(r.json)
         print("Error control signaling failed")
+        return False
 
 
 def sendDataFromMicroController(id: str, ph: str, tmp: str):
@@ -33,9 +38,14 @@ def sendDataFromMicroController(id: str, ph: str, tmp: str):
     if(r.status == 200):
         print("Data sending sucess")
         print(r.json)
+        return True
+    elif (r.status_code==422):
+        print("Validation error")
+        return False
     else:
         print(r.json)
         print("Data sending failed")
+        return False
 
 
 def getFeedTimeFromServer(device_id:str):
@@ -49,9 +59,14 @@ def getFeedTimeFromServer(device_id:str):
     if(r.status == 200):
         print("Get feeding time  sucess")
         print(r.json)
+        return True
+    if (r.status_code==422):
+        print("Validation error")
+        return False
     else:
         print(r.json)
         print("Get feeding time failed")
+        return False
 
 
 
@@ -66,6 +81,11 @@ def getTempFromServer(device_id:str):
     if(r.status == 200):
         print("Get temperature  sucess")
         print(r.json)
+        return True
+    if (r.status_code==422):
+        print("Validation error")
+        return False
     else:
         print(r.json)
         print("Get temperature failed")
+        return False
