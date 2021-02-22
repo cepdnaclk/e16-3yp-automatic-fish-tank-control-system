@@ -12,6 +12,12 @@
 
 [**Click here to check our website!!**](https://cepdnaclk.github.io/e16-3yp-automatic-fish-tank-control-system/)
 
+
+
+>[**Test Report**](https://drive.google.com/file/d/1F7HOCfssk0AVqgeDQZsq9y4fHZ0nvSgG/view?usp=sharing)
+>This report contains all the test cases we have done with our softwarecomponents
+
+
 ## Group members
 
 > [Vindula I B S](https://github.com/supunvindula) **E/16/377**

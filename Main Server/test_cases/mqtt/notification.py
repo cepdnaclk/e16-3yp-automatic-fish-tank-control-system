@@ -1,4 +1,9 @@
 import paho.mqtt.client as mqtt
+host =""
+port =1883
+topic ="/app/101"
+
+
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -6,7 +11,7 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe("app/101",qos=1)
+    client.subscribe(topic,qos=1)
     
 
 # The callback for when a PUBLISH message is received from the server.
@@ -16,5 +21,6 @@ def on_message(client, userdata, msg):
 client = mqtt.Client("101",False)
 client.on_connect = on_connect
 client.on_message = on_message
-client.connect("3.89.109.97", 1883)
+client.connect(host, port)
 client.loop_forever()
+
