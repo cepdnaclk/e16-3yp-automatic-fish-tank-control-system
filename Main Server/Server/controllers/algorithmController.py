@@ -29,6 +29,6 @@ async def findFeedingAmount(device_id: str):
         fish_detail = await fish_collection.find_one({'fish_name': fish})
         if not fish_detail:
             continue
-        avg_tmp = avg_tmp+fish_detail["feed_amount"]
+        avg_tmp = avg_tmp + fish_detail["feed_amount"]
         print(str(fish_detail["feed_amount"]))
     return avg_feed

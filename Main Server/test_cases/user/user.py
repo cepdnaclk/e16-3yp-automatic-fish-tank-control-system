@@ -1,7 +1,7 @@
 import requests
 import json
 
-from test_cases.user.config import PORT, IP
+from  import PORT, IP
 
 Url = "http://"+IP+":"+PORT+"/"
 
