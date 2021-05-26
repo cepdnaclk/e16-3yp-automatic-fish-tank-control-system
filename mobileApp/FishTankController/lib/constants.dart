@@ -1,10 +1,12 @@
-const String LOGINURL="http://35.173.230.92:33000/login";
-const String SIGNUPURL='http://35.173.230.92:33000/signup';
-const String GETTANKIDSURL='http://35.173.230.92:33000/app/getdevicedata';
-const String ADDTANKURL='http://35.173.230.92:33000/app/addtank';
-const String GETFISHNAMES='http://35.173.230.92:33000/app/fishnames';
-const String FEEDNOW="http://35.173.230.92:33000/control/feed";
-const String RENEW="http://35.173.230.92:33000/control/renew";
-const String GRAPHURL="http://35.173.230.92:33000/app/retrivedata";
-const String DELETETANKURL="http://35.173.230.92:33000/app/deletetank";
+const String ip = "http://35.175.152.136:33000";
+const String LOGINURL= ip + "/login";
+const String SIGNUPURL=ip + '/signup';
+const String GETTANKIDSURL= ip + '/app/getdevicedata';
+const String ADDTANKURL= ip + '/app/addtank';
+const String GETFISHNAMES= ip + '/app/fishnames';
+const String FEEDNOW= ip + "/control/feed";
+const String RENEW= ip + "/control/renew";
+const String GRAPHURL= ip + "/app/retrivedata";
+const String DELETETANKURL= ip + "/app/deletetank";
+
 
