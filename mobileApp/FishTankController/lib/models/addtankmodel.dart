@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class AddTankRequestModel {
+  final String phone_no;
   final String email;
   final String device_id;
   final List<String> fish_names;
@@ -9,8 +10,9 @@ class AddTankRequestModel {
   final int lenght;
   final int width;
 
-  AddTankRequestModel(
-      {@required this.email,
+  AddTankRequestModel({
+      @required this.phone_no,
+      @required this.email,
       @required this.device_id,
       @required this.fish_names,
       @required this.fish_count,
@@ -20,6 +22,7 @@ class AddTankRequestModel {
 
   Map<String, dynamic> toMap() {
     return {
+      "phone_no":phone_no,
       "email": email,
       "device_id": device_id,
       "fish_names": fish_names,

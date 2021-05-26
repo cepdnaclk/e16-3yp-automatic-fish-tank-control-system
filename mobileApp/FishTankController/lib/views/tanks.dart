@@ -26,6 +26,7 @@ class Tanks extends StatefulWidget {
 }
 
 class _TanksState extends State<Tanks> {
+  String phonenumber;
   String tankid;
   String email;
   int height;
@@ -75,7 +76,23 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Tank ID",
-                    helperText: "Enter the tank id.",
+                    helperText: "Enter your tank id here..",
+                    border: new OutlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.teal))),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              width: size.width * 0.8,
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              decoration: BoxDecoration(color: Colors.grey[200]),
+              child: TextField(
+                onChanged: (value) {
+                  this.phonenumber = value;
+                },
+                decoration: InputDecoration(
+                    hintText: "WhatsApp Number",
+                    helperText: "Enter your whatsapp number here..",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -91,7 +108,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Email",
-                    helperText: "Enter the email address.",
+                    helperText: "Enter your account email here..",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -108,7 +125,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Height",
-                    helperText: "Enter the tank height.",
+                    helperText: "Enter your tank height  here..",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -125,7 +142,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Width",
-                    helperText: "Enter the tank width.",
+                    helperText: "Enter your tank width here..",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -142,7 +159,7 @@ class _TanksState extends State<Tanks> {
                 },
                 decoration: InputDecoration(
                     hintText: "Length",
-                    helperText: "Enter the tank length.",
+                    helperText: "Enter your tank length here..",
                     border: new OutlineInputBorder(
                         borderSide: new BorderSide(color: Colors.teal))),
               ),
@@ -176,6 +193,7 @@ class _TanksState extends State<Tanks> {
                     width: size.width * 0.08,
                   ),
                   IconButton(
+                    highlightColor: Colors.green,
                     iconSize: 21,
                     icon: Icon(
                       MdiIcons.basketPlus,
@@ -201,6 +219,7 @@ class _TanksState extends State<Tanks> {
                       nextevent: AddTankClickedEvent(
                           addTankRepo: AddTankRepo(),
                           addTankRequestModel: AddTankRequestModel(
+                              phone_no: this.phonenumber,
                               device_id: this.tankid,
                               email: this.email,
                               fish_count: this.fishcount,
@@ -239,7 +258,7 @@ class _TanksState extends State<Tanks> {
                 this.fishnames[i] = value;
               },
               decoration: InputDecoration(
-                  hintText: "Fish Type",
+                  hintText: "Fish Name",
                   border: new OutlineInputBorder(
                       borderSide: new BorderSide(color: Colors.teal))),
             ),
