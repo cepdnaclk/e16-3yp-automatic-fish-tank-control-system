@@ -21,6 +21,9 @@ jinja2 = "*"
 python-multipart = "*"
 requests = "*"
 fastapi-limiter = "*"
+iso8601 = "*"
+strict-rfc3339 = "*"
+moment = "*"
 
 [requires]
 python_version = "3.7"

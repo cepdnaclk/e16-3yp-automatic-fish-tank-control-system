@@ -32,11 +32,13 @@ async def storeData(id:str,ph:str,tmp:str):
 async def retriveData(id:str,day:str):
     try:
         id='"'+id+'"'
-        query = 'select * from '+id+' where ((time > now()-'+day+') and (time < now()+1d-'+day+'))'
+        query = 'select * from '+id+' where ((time > now()-'+day+'))'
         result=client.query(query)
         data=result.raw
+        print(data['series'][0]['values'])
         return data['series'][0]['values']
     except:
+        print("Error in retrive data from influx")
         return []
     
     
