@@ -9,12 +9,10 @@
 
 
 #define ALERT_PORT 18
-#define FEED_PORT  17
-#define WATER_REMOVE_PORT  16
-#define WATER_FILL_PORT 15
-#define TEMPO_PIN  14 //pH meter Analog output to ESP Analog Input 14
-#define PH_PIN 12
-#define WATER_RENEW_DELAY 60000
+#define FEED_PORT  21
+#define WATER_REMOVE_PORT  22
+#define WATER_FILL_PORT 22
+#define WATER_RENEW_DELAY 1000
 
 // GPIO where the DS18B20 is connected to
 const int oneWireBus = 4;  
@@ -22,17 +20,17 @@ const int oneWireBus = 4;
 int pHSense = 19;
 
 // set wifi credentials
-const char* ssid = "REPLACE_WITH_YOUR_SSID";
-const char* password = "REPLACE_WITH_YOUR_PASSWORD";
+const char* ssid = "SLT-4G-6161";
+const char* password = "07DR71T1NT9";
 
 // Id of the device
-String device_ID = "001";
+String device_ID = "2";
 
 // feeding time on tank
-int feedtime = 0;
+int feedtime = 5000;
 
 // Server name 
-String serverName = "http://192.168.1.106:3000/tankapi/";
+String serverName = "http://35.175.152.136:33000/tankapi/";
 
 
 // Setup a oneWire instance to communicate with any OneWire devices
@@ -41,10 +39,10 @@ OneWire oneWire(oneWireBus);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
 // temparature stable range
-float stable_temp=120.0;
+float stable_temp=28;
 
 // ph stable range
-int stable_ph=140;
+int stable_ph=7;
 
 // clients for mqtt connection
 WiFiClient espClient;
@@ -139,7 +137,10 @@ void initTemp(){
 
 }
 
-
+void sendError(String msg){
+  String serverPath = serverName + "error";
+  httpPOSTRequest(serverPath,"{\"id\":\""+device_ID+"\",\"msg\":\""+msg+"\"}");
+}
 
 // return current temparature
 float getTemparatue(){
@@ -229,9 +230,10 @@ unsigned char checkTemprature(float temp){
    check the temparature
   
   */
-  if( stable_temp-10<temp<stable_temp+10){
+  if( (temp>stable_temp-5) && (temp<stable_temp+5)){
     return '1';
   }else{
+    sendError("1");
     return '0';
   }
 }
@@ -241,9 +243,10 @@ unsigned char checkPh(float ph){
   /*
     check the ph value
   */
-  if(stable_ph-5<ph<stable_ph+5){
+  if((ph>stable_ph-2) && (ph<stable_ph+2)){
    return '1'; 
   }else{
+    sendError("2");
     return '0';
   }
 }
@@ -268,8 +271,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 
 void setup() {
+// Start the Serial Monitor
+  Serial.begin(115200);
+  // Start the DS18B20 sensor
+  sensors.begin();
   // mqtt client is now configured for use
-  client.setServer(IPAddress(192,168,1,106), 1883);
+  client.setServer(IPAddress(35,175,152,136), 1883);
   client.setCallback(callback);
   
   WiFi.begin(ssid, password);
@@ -302,12 +309,14 @@ void loop() {
    alertOn();
    renewWater();
    alertOff();
+   delay(10000);
  }
  if (checkTemprature(temp)=='0')
  {
    alertOn();
    renewWater();
    alertOff();
+   delay(10000);
  }
  
  if (sendData(ph,temp)=='0')
