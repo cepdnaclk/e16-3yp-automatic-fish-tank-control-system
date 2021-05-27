@@ -172,6 +172,12 @@ float getPH(){
   Serial.print("pH Value > ");
   Serial.print(P0, 3);
   Serial.print("\n");
+  // srand ( time(NULL) ); //initialize the random seed
+  
+
+  // const float arrayNum[4] = {'6.93', '6.95', '6.91', '6.99'};
+  // int RandIndex = rand() % 4; //generates a random number between 0 and 3
+  // return arrayNum[RandIndex];
   return P0;
 }
 
