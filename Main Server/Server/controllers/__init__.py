@@ -1,0 +1,1 @@
+send_msg_chat_api_url='https://api.chat-api.com/instance276169/sendMessage?token=frpiy5smz0okaepc'
