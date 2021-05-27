@@ -46,6 +46,7 @@ class DeviceData(BaseModel):
 
 
 class AddTank(BaseModel):
+    phone_no:str = Field(...)
     email: EmailStr = Field(...)
     device_id: str
     fish_names: List[str]

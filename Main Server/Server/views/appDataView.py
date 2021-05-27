@@ -2,6 +2,7 @@ from fastapi import Body, Header, HTTPException, status, Response
 from typing import Optional
 
 
+
 from Server import app
 from Server.db.schemas.userschema import AddTank, RetriveData, AppData, Device, DeleteTank
 from Server.db.controllers.tankHandlers import addNewTank, getFishNamesFromDB,removeTank
@@ -9,6 +10,7 @@ from Server.db.controllers.influxHandlers import retriveData
 from Server.db.controllers.appHandlers import getAppData
 from Server.views.userView import setToken
 from Server.controllers.tokenControllers import token_check
+from Server.db.controllers.phoneHandlers import addPhoneNumber
 
 
 @app.post("/app/addtank")
@@ -28,7 +30,7 @@ async def addTank(response: Response, Authorization: Optional[str] = Header(None
     tank["lenght"] = body.lenght
     tank["width"] = body.width
 
-    if (await addNewTank(tank, body.email)):
+    if (await addNewTank(tank, body.email) and await addPhoneNumber(body.phone_no,body.device_id)):
         access_token = setToken(body.email)
         response.headers["Authorization"] = "Bearer "+access_token
         return{"status": True}
@@ -51,6 +53,10 @@ async def retriveTankData(response: Response, Authorization: Optional[str] = Hea
     access_token = setToken(body.email)
     response.headers["Authorization"] = "Bearer "+access_token
     data = await retriveData(body.device_id, body.day)
+    
+    for i in range(len(data)):
+        d=data[i][0].split("T")
+        data[i][0]=d[0]+" "+d[1].split(".")[0]
     return {"data": data}
 
 
