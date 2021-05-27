@@ -17,7 +17,7 @@
 // GPIO where the DS18B20 is connected to
 const int oneWireBus = 4;  
 // GPIO where ph module connects
-int pHSense = 19;
+int pHSense = 15;
 
 // set wifi credentials
 const char* ssid = "SLT-4G-6161";

@@ -28,8 +28,9 @@ class GraphResponseModel {
     }
 
     json['data'].forEach((data) {
-      phlist.add(TimeSeriesPh(DateTime.parse(data[0]), data[1]));
-      templist.add(TimeSeriesTemp(DateTime.parse(data[0]), data[2]));
+      print(data);
+      phlist.add(TimeSeriesPh(DateTime.parse(data[0]), int.parse(data[1])));
+      templist.add(TimeSeriesTemp(DateTime.parse(data[0]), int.parse(data[2])));
     });
 
     return GraphResponseModel(phlist: phlist, templist: templist);

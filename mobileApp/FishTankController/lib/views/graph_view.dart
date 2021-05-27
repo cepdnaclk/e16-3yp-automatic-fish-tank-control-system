@@ -9,7 +9,7 @@ class GraphView extends StatefulWidget {
   final List<TimeSeriesPh> phDataArray;
   final List<TimeSeriesTemp> tempDataArray;
 
-  const GraphView({@required  this.phDataArray,@required this.tempDataArray});
+  const GraphView({@required this.phDataArray, @required this.tempDataArray});
   @override
   _GraphViewState createState() => _GraphViewState();
 }
@@ -18,8 +18,6 @@ class _GraphViewState extends State<GraphView> {
   List<charts.Series<TimeSeriesPh, DateTime>> phseriesList;
   List<charts.Series<TimeSeriesTemp, DateTime>> tempseriesList;
   bool floatClicked = true;
-
-  
 
   @override
   void initState() {
@@ -43,35 +41,68 @@ class _GraphViewState extends State<GraphView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        elevation: 10,
-        onPressed: () {
-          setState(() {
-            this.floatClicked = !this.floatClicked;
-          });
-        },
-        child: Text(this.floatClicked ? "TEMP" : "PH"),
-        backgroundColor: Colors.black,
-        splashColor: Colors.white,
-        materialTapTargetSize: MaterialTapTargetSize.padded,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-      body: Background(
-          child: Padding(
-        padding: EdgeInsets.all(8.8),
-        child: Container(
-          child: Center(
-            child: Graph(
-              heading: this.floatClicked
-                  ? "PH VALUE WEEKLY STATUS"
-                  : "TEMP WEEKLY STATUS",
-              param: this.floatClicked ? "PH" : "TEMP",
-              seriesList: this.phseriesList,
+    if (this.floatClicked) {
+      return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          onPressed: () {
+            setState(() {
+              this.floatClicked = !this.floatClicked;
+            });
+          },
+          child: Text(this.floatClicked ? "TEMP" : "PH"),
+          backgroundColor: Colors.black,
+          splashColor: Colors.white,
+          materialTapTargetSize: MaterialTapTargetSize.padded,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+        body: Background(
+            child: Padding(
+          padding: EdgeInsets.all(8.8),
+          child: Container(
+            child: Center(
+              child: Graph(
+                heading: this.floatClicked
+                    ? "PH VALUE WEEKLY STATUS"
+                    : "TEMP WEEKLY STATUS",
+                param: this.floatClicked ? "PH" : "TEMP",
+                seriesList: this.phseriesList,
+              ),
             ),
           ),
+        )),
+      );
+    } else {
+      return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          onPressed: () {
+            setState(() {
+              this.floatClicked = !this.floatClicked;
+            });
+          },
+          child: Text(this.floatClicked ? "TEMP" : "PH"),
+          backgroundColor: Colors.black,
+          splashColor: Colors.white,
+          materialTapTargetSize: MaterialTapTargetSize.padded,
         ),
-      )),
-    );
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+        body: Background(
+            child: Padding(
+          padding: EdgeInsets.all(8.8),
+          child: Container(
+            child: Center(
+              child: Graph(
+                heading: this.floatClicked
+                    ? "PH VALUE WEEKLY STATUS"
+                    : "TEMP WEEKLY STATUS",
+                param: this.floatClicked ? "PH" : "TEMP",
+                seriesList: this.tempseriesList,
+              ),
+            ),
+          ),
+        )),
+      );
+    }
   }
 }

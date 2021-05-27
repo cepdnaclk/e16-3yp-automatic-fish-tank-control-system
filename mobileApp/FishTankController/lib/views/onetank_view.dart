@@ -95,7 +95,7 @@ class _OneTankViewState extends State<OneTankView> {
               padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.2, vertical: 10),
               color: Colors.blueGrey,
-              onPressed: () => this.WeeklyStatus("1d"),
+              onPressed: () => this.WeeklyStatus("3d"),
               child: Text(
                 "WEEKLY STATUS",
                 style: TextStyle(
@@ -197,7 +197,7 @@ class _OneTankViewState extends State<OneTankView> {
       });
       if (fishNameResponseModel == null) {
         await logoutAlertMessage(context, "Time Out",
-            "Session timed out! Please login again");
+            "Your session is time out..pleace login again..");
         Navigator.of(context).pop(true);
       } else {
         Navigator.push(
@@ -215,7 +215,7 @@ class _OneTankViewState extends State<OneTankView> {
         this.isreloading = false;
       });
       alertMessage(
-          context, "Connection Failed", "Check your network status and try again!");
+          context, "Connection Failed", "Check your network connection....");
     }
   }
 
@@ -231,10 +231,10 @@ class _OneTankViewState extends State<OneTankView> {
         this.isreloading = false;
       });
       if (status) {
-        alertMessage(context, "SUCCESS!", "This process was successful");
+        alertMessage(context, "Done", "you have sussefully done...");
       } else {
-        await logoutAlertMessage(context, "Session Expired!",
-            "Please login again!");
+        await logoutAlertMessage(context, "Time Out",
+            "Your session is time out..pleace login again..");
         Navigator.of(context).pop(true);
       }
     } catch (e) {
@@ -242,61 +242,68 @@ class _OneTankViewState extends State<OneTankView> {
         this.isreloading = false;
       });
       alertMessage(
-          context, "Connection Failed!", "Check your network status.");
+          context, "Connection Failed", "Check your network connection....");
     }
   }
 
   void WeeklyStatus(String day) async {
-    List<TimeSeriesPh> phDataArray = [
-      TimeSeriesPh(new DateTime(2021, 9, 19), 10),
-      TimeSeriesPh(new DateTime(2021, 9, 21), 11),
-      TimeSeriesPh(new DateTime(2021, 9, 22), 25),
-      TimeSeriesPh(new DateTime(2021, 9, 23), 50),
-      TimeSeriesPh(new DateTime(2021, 9, 24), 55)
-    ];
-    List<TimeSeriesTemp> tempDataArray = [
-      TimeSeriesTemp(new DateTime(2021, 9, 19), 10),
-      TimeSeriesTemp(new DateTime(2021, 9, 21), 11),
-      TimeSeriesTemp(new DateTime(2021, 9, 22), 25),
-      TimeSeriesTemp(new DateTime(2021, 9, 23), 50),
-      TimeSeriesTemp(new DateTime(2021, 9, 24), 55)
-    ];
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          fullscreenDialog: true,
-          builder: (context) => GraphView(
-            phDataArray: phDataArray,
-            tempDataArray: tempDataArray,
-          ),
-        ));
-    // setState(() {
-    //   this.isreloading = false;
-    // });
-    // try {
-    //   GraphResponseModel graphResponseModel =
-    //       await this.graphRepo.getphGraph(day, widget.email, widget.tankid);
-
-    //   if (graphResponseModel != null) {
-    //     this.graphResponseModel = graphResponseModel;
-    //     this.weeklyDataStatus = true;
-    //     Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //           fullscreenDialog: true,
-    //           builder: (context) => GraphView(
-    //             phDataArray: graphResponseModel.phlist,
-    //             tempDataArray: graphResponseModel.templist,
-    //           ),
-    //         ));
-    //   } else {
-    //     await logoutAlertMessage(context, "Time Out",
-    //         "Your session is time out..pleace login again..");
-    //     Navigator.of(context).pop(true);
-    //   }
-    // } catch (e) {
-    //   alertMessage(
-    //       context, "Connection Failed", "Check your network connection....");
-    // }
+    // List<TimeSeriesPh> phDataArray = [
+    //   TimeSeriesPh(new DateTime(2021, 9, 19), 10),
+    //   TimeSeriesPh(new DateTime(2021, 9, 21), 11),
+    //   TimeSeriesPh(new DateTime(2021, 9, 22), 25),
+    //   TimeSeriesPh(new DateTime(2021, 9, 23), 50),
+    //   TimeSeriesPh(new DateTime(2021, 9, 24), 55)
+    // ];
+    // List<TimeSeriesTemp> tempDataArray = [
+    //   TimeSeriesTemp(new DateTime(2021, 9, 19), 10),
+    //   TimeSeriesTemp(new DateTime(2021, 9, 21), 11),
+    //   TimeSeriesTemp(new DateTime(2021, 9, 22), 25),
+    //   TimeSeriesTemp(new DateTime(2021, 9, 23), 50),
+    //   TimeSeriesTemp(new DateTime(2021, 9, 24), 55)
+    // ];
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       fullscreenDialog: true,
+    //       builder: (context) => GraphView(
+    //         phDataArray: phDataArray,
+    //         tempDataArray: tempDataArray,
+    //       ),
+    //     ));
+    setState(() {
+      this.isreloading = true;
+    });
+    try {
+      GraphResponseModel graphResponseModel =
+          await this.graphRepo.getphGraph(day, widget.email, widget.tankid);
+      setState(() {
+        this.isreloading = false;
+      });
+      print( graphResponseModel.phlist);
+      if (graphResponseModel != null) {
+        this.graphResponseModel = graphResponseModel;
+        this.weeklyDataStatus = true;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) => GraphView(
+                phDataArray: graphResponseModel.phlist,
+                tempDataArray: graphResponseModel.templist,
+              ),
+            ));
+      } else {
+        await logoutAlertMessage(context, "Time Out",
+            "Your session is time out..pleace login again..");
+        Navigator.of(context).pop(true);
+      }
+    } catch (e) {
+      print(e);
+      setState(() {
+        this.isreloading = false;
+      });
+      alertMessage(
+          context, "Connection Failed", "Check your network connection....");
+    }
   }
 }
