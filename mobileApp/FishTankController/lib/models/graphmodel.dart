@@ -29,8 +29,8 @@ class GraphResponseModel {
 
     json['data'].forEach((data) {
       print(data);
-      phlist.add(TimeSeriesPh(DateTime.parse(data[0]), int.parse(data[1])));
-      templist.add(TimeSeriesTemp(DateTime.parse(data[0]), int.parse(data[2])));
+      phlist.add(TimeSeriesPh(DateTime.parse(data[0]), double.parse(data[1])));
+      templist.add(TimeSeriesTemp(DateTime.parse(data[0]), double.parse(data[2])));
     });
 
     return GraphResponseModel(phlist: phlist, templist: templist);
@@ -39,14 +39,14 @@ class GraphResponseModel {
 
 class TimeSeriesPh {
   final DateTime time;
-  final int ph;
+  final double ph;
 
   TimeSeriesPh(this.time, this.ph);
 }
 
 class TimeSeriesTemp {
   final DateTime time;
-  final int temp;
+  final double temp;
 
   TimeSeriesTemp(this.time, this.temp);
 }

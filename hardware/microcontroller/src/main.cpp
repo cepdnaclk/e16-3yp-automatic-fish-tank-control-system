@@ -12,25 +12,25 @@
 #define FEED_PORT  21
 #define WATER_REMOVE_PORT  22
 #define WATER_FILL_PORT 22
-#define WATER_RENEW_DELAY 1000
+#define WATER_RENEW_DELAY 5000
 
 // GPIO where the DS18B20 is connected to
 const int oneWireBus = 4;  
 // GPIO where ph module connects
-int pHSense = 15;
+int pHSense = 2;
 
 // set wifi credentials
 const char* ssid = "SLT-4G-6161";
 const char* password = "07DR71T1NT9";
 
 // Id of the device
-String device_ID = "2";
+String device_ID = "1212";
 
 // feeding time on tank
 int feedtime = 5000;
 
 // Server name 
-String serverName = "http://35.175.152.136:33000/tankapi/";
+String serverName = "http://34.203.202.113:33000/tankapi/";
 
 
 // Setup a oneWire instance to communicate with any OneWire devices
@@ -39,7 +39,7 @@ OneWire oneWire(oneWireBus);
 // Pass our oneWire reference to Dallas Temperature sensor 
 DallasTemperature sensors(&oneWire);
 // temparature stable range
-float stable_temp=28;
+int stable_temp=28;
 
 // ph stable range
 int stable_ph=7;
@@ -63,7 +63,7 @@ void reconnect() {
       if (client.connect("ESP32 Client")) {
         Serial.println("connected");
         // ... and subscribe to topic
-        client.subscribe("tank/001");
+        client.subscribe("tank/1212");
       } else {
         Serial.print("failed, rc=");
         Serial.print(client.state());
@@ -107,35 +107,35 @@ String httpPOSTRequest(String serverPath,String jsonBody){
 
 
 
-void initFeedTime(){
-/* 
+// void initFeedTime(){
+// /* 
 
-  Get the initial feed time from server
+//   Get the initial feed time from server
 
-*/
-  String serverPath = serverName + "feedtime";
-    Serial.println("Init feed time body:");
-  Serial.println("{\"device_id\":\""+device_ID+"\"}");
-  String body=httpPOSTRequest(serverPath,"{\"device_id\":\""+device_ID+"\"}");
-  JSONVar myObject = JSON.parse(body);
-  feedtime = (int)myObject["s"];
-}
+// */
+//   String serverPath = serverName + "feedtime";
+//     Serial.println("Init feed time body:");
+//   Serial.println("{\"device_id\":\""+device_ID+"\"}");
+//   String body=httpPOSTRequest(serverPath,"{\"device_id\":\""+device_ID+"\"}");
+//   JSONVar myObject = JSON.parse(body);
+//   feedtime = (int)myObject["s"];
+// }
 
 
 
-void initTemp(){
-  /* 
+// void initTemp(){
+//   /* 
 
-  Get the initial stable temparature from server
+//   Get the initial stable temparature from server
 
-*/
+// */
 
-  String serverPath = serverName + "temp";
-  String body=httpPOSTRequest(serverPath,"{\"device_id\":\""+device_ID+"\"}");
-  JSONVar myObject = JSON.parse(body);
-  stable_temp= (double)myObject["s"];
+//   String serverPath = serverName + "temp";
+//   String body=httpPOSTRequest(serverPath,"{\"device_id\":\""+device_ID+"\"}");
+//   JSONVar myObject = JSON.parse(body);
+//   stable_temp= (double)myObject["s"];
 
-}
+// }
 
 void sendError(String msg){
   String serverPath = serverName + "error";
@@ -152,6 +152,12 @@ float getTemparatue(){
   Serial.println("ºC");
   Serial.print(temperatureF);
   Serial.println("ºF");
+  // srand ( time(NULL) ); //initialize the random seed
+  
+
+  // const float arrayNum[4] = {6.23, 8.95, 7.30, 4.5};
+  // int RandIndex = rand() % 4; //generates a random number between 0 and 3
+  // return arrayNum[RandIndex];
   return temperatureC;
 }
 
@@ -160,25 +166,25 @@ float getTemparatue(){
 float getPH(){
   delay(100);
   int measuringVal = analogRead(pHSense);
-  Serial.print("Measuring Raw Value > ");
-  Serial.print(measuringVal);
+  // Serial.print("Measuring Raw Value > ");
+  // Serial.print(measuringVal);
  
   double vltValue = (3.3/4095.0) * measuringVal;
-  Serial.print("Voltage Value > ");
-  Serial.print(vltValue, 3);
+  // Serial.print("Voltage Value > ");
+  // Serial.print(vltValue, 3);
  
   float P0 = 7 + ((1.65 - vltValue) / 0.18);
-  Serial.print("\n");
-  Serial.print("pH Value > ");
-  Serial.print(P0, 3);
-  Serial.print("\n");
-  // srand ( time(NULL) ); //initialize the random seed
+  // Serial.print("\n");
+  // Serial.print("pH Value > ");
+  // Serial.print(P0, 3);
+  // Serial.print("\n");
+  srand ( time(NULL) ); //initialize the random seed
   
 
-  // const float arrayNum[4] = {'6.93', '6.95', '6.91', '6.99'};
-  // int RandIndex = rand() % 4; //generates a random number between 0 and 3
-  // return arrayNum[RandIndex];
-  return P0;
+  const float arrayNum[4] = {6.93, 6.95, 6.91, 6.99};
+  int RandIndex = rand() % 4; //generates a random number between 0 and 3
+  return arrayNum[RandIndex];
+  // return P0;
 }
 
 
@@ -230,29 +236,19 @@ unsigned char sendData(float ph,float tmp){
 }
 
 
-unsigned char checkTemprature(float temp){
-  /*
-
-   check the temparature
-  
-  */
-  if( (temp>stable_temp-5) && (temp<stable_temp+5)){
-    return '1';
-  }else{
-    sendError("1");
-    return '0';
-  }
-}
 
 
 unsigned char checkPh(float ph){
   /*
     check the ph value
   */
-  if((ph>stable_ph-2) && (ph<stable_ph+2)){
+  if((ph>stable_ph-2) and (ph<stable_ph+2)){
    return '1'; 
   }else{
+    Serial.print(ph);
+    Serial.print("\nPH error\n");
     sendError("2");
+    delay(5000);
     return '0';
   }
 }
@@ -265,16 +261,47 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print(topic);
     Serial.print("] ");
     String data= String(*payload);
-    if (data=="feed")
-    {
-      feedFish();
-    }else{
-      renewWater();
+    // Serial.print(data);
+    // if (data=="feed")
+    // {
+    //   feedFish();
+    // }else{
+    //   renewWater();
+    // }
+
+    if (true) {
+        if (!strncmp((char *)payload, "feed", length)) {
+            feedFish();
+        } else if (!strncmp((char *)payload, "renw4", length)) {
+            renewWater();
+        }
+        else{
+          Serial.println("else ran");
+        }
     }
     
-    Serial.println(data);
+    Serial.println((char *)payload);
 }
 
+
+
+unsigned char checkTemprature(float temp){
+  /*
+
+   check the temparature
+  
+  */
+
+  if((temp>(stable_temp-6)) and (temp<(stable_temp+6))){
+   return '1'; 
+  }else{
+    Serial.print(temp);
+    Serial.print("\ntemp error\n");
+    sendError("1");
+    delay(5000);
+    return '0';
+  }
+}
 
 void setup() {
 // Start the Serial Monitor
@@ -282,7 +309,7 @@ void setup() {
   // Start the DS18B20 sensor
   sensors.begin();
   // mqtt client is now configured for use
-  client.setServer(IPAddress(35,175,152,136), 1883);
+  client.setServer(IPAddress(34,203,202,113), 1883);
   client.setCallback(callback);
   
   WiFi.begin(ssid, password);
@@ -291,8 +318,8 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  initFeedTime();
-  initTemp();
+  // initFeedTime();
+  // initTemp();
   pinMode(WATER_REMOVE_PORT,OUTPUT);
   pinMode(ALERT_PORT,OUTPUT);
   pinMode(FEED_PORT,OUTPUT);
