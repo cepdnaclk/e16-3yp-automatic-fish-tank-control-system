@@ -1,0 +1,65 @@
+{
+    "title": "Fish Tank Control System",
+    "team": [
+        {
+            "name": "Supun Vindula",
+            "email": "e16377@eng.pdn.ac.lk",
+            "eNumber": "E/16/377",
+            "github_profile":"https://github.com/supunvindula",
+            "linkedin_profile":"https://www.linkedin.com/in/supun-vindula/"
+        },
+        {
+            "name": "Randika Viraj",
+            "email": "e16332@eng.pdn.ac.lk",
+            "eNumber": "E/16/332",
+            "github_profile":"https://github.com/Randikaviraj",
+            "linkedin_profile":"https://www.linkedin.com/in/randika-viraj-b61824184/"
+        },
+        {
+            "name": "Yoshith Harshana",
+            "email": "e16127@eng.pdn.ac.lk",
+            "eNumber": "E/16/127",
+            "github_profile":"https://www.linkedin.com/in/supun-vindula/",
+            "linkedin_profile":"#"
+        }
+    ],
+    "supervisors": [
+        {
+            "name": "Dr. Isuru Nawinne",
+            "email": "isurunawinne@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/isuru-nawinne-73302833/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Isuru-Nawinne"
+        },
+        {
+            "name": "Dr. Ziyan Maraikar",
+            "email": "ziyanm@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/ziyanm/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Ziyan-Maraikar-2"
+        },
+        {
+            "name": "Prof. Roshan G. Ragel",
+            "email": "roshanr@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/roshanragel/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Roshan-Ragel"
+        },
+        {
+            "name": "Dr. Suneth Namal",
+            "email": "namal@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/suneth-namal-b70b8688/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Suneth-Namal"
+        },
+        {
+            "name": "Dr. Asitha Bandaranayake",
+            "email": "asithab@pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/asithab/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Asitha-Bandaranayake-3"
+        },
+        {
+            "name": "Dr. Upul Jayasinghe",
+            "email": "upuljm@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/upuljm/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Upul-Jayasinghe"
+        }
+    ],
+    "tags": ["Web", "Embedded Systems"]
+}
